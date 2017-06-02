@@ -1,0 +1,8 @@
+{
+  "name"              :"ProtectedShopsForPlenty",
+  "description"       :"Protected shops plugin for plenty helps you keep your legal documents up to date",
+  "namespace"         :"ProtectedShops",
+  "author"            :"spas.shopov@dnhsoft.com",
+  "type"              :"template",
+  "serviceProvider"   :"ProtectedShops\\Providers\\ProtectedShopsServiceProvider"
+}
