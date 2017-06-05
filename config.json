@@ -1,0 +1,9 @@
+[
+  {
+    "tab"       : "ProtectedShops",
+    "key"       : "shopId",
+    "label"     : "Shop ID from protectedShops",
+    "type"      : "text",
+    "default"   : "Shop"
+  },
+]
