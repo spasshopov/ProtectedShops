@@ -2,10 +2,10 @@
 
 namespace ProtectedShops\Providers;
 
-use Plenty\Plugin\ServiceProvider;
+use Plenty\Plugin\RouteServiceProvider;
 use Plenty\Plugin\Routing\Router;
 
-class ProtectedShopsRouteServiceProvider extends ServiceProvider
+class ProtectedShopsRouteServiceProvider extends RouteServiceProvider
 {
     public function map(Router $router)
     {
