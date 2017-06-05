@@ -5,5 +5,5 @@
     "label"     : "Shop ID from protectedShops",
     "type"      : "text",
     "default"   : "Shop"
-  },
+  }
 ]
