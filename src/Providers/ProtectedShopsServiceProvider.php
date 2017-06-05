@@ -2,7 +2,7 @@
 
 namespace ProtectedShops\Providers;
 
-use \Plenty\Plugin\ServiceProvider;
+use Plenty\Plugin\ServiceProvider;
 
 class ProtectedShopsServiceProvider extends ServiceProvider
 {

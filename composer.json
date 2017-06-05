@@ -1,0 +1,19 @@
+{
+  "name": "protectedshops-for-plenty",
+  "type": "project",
+  "description": "",
+  "license": "AGPL-3.0",
+  "authors":
+  [
+    {
+      "name": "protectedshops",
+      "email": "info@protectedshops.de",
+      "homepage": "https://www.protectedshops.de",
+      "role": "Developer"
+    }
+  ],
+  "require":
+  {
+    "php": "^5.5 || ^7.0"
+  }
+}

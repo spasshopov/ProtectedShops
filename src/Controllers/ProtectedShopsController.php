@@ -8,8 +8,8 @@ use Plenty\Plugin\Templates\Twig;
 
 class ProtectedShopsController extends Controller
 {
-    public function index(Twig $twig)
+    public function protectedShopsInfo(Twig $twig)
     {
-        return $twig->render('ProtectedShopsForPlenty::content.index');
+        return $twig->render('ProtectedShopsForPlenty::content.info');
     }
 }
