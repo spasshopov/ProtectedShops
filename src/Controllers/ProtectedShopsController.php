@@ -22,7 +22,7 @@ class ProtectedShopsController extends Controller
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
         $data['shopId'] = $shopId;
         $data['document'] = $this->psService->getDocument($shopId, 'agb');
-
+        var_dump($data); exit;
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
 }
