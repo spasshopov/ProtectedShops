@@ -11,16 +11,19 @@ class ProtectedShopsController extends Controller
     /**
      * @var string
      */
-    private $apiUrl;
+    private $apiUrl = 'api.stage.protectedshops.de';
 
     public function protectedShopsInfo(Twig $twig, ConfigRepository $config):string
     {
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
         $data['shopId'] = $shopId;
         $remoteResponse = $this->getDocument($shopId, 'agb');
-        //$remoteResponse = json_decode($remoteResponse);
+        $remoteResponse = json_decode($remoteResponse);
 
-        $data['res'] = $remoteResponse;
+        $documentType = 'agb';
+        $apiFunction = 'documents/' . $documentType . '/contentformat/html';
+        $dsUrl = "https://$this->apiUrl/v2.0/de/partners/demo/shops/$shopId/$apiFunction/format/json";
+        $data['url'] = $dsUrl;
 
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
