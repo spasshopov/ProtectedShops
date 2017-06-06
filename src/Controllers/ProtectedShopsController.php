@@ -9,20 +9,19 @@ use ProtectedShops\Service\ProtectedShopsDocumentService;
 
 class ProtectedShopsController extends Controller
 {
+    /**
+     * @var ProtectedShopsDocumentService
+     */
     private $psService;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->psService = new ProtectedShopsDocumentService();
-    }
 
     public function protectedShopsInfo(Twig $twig, ConfigRepository $config):string
     {
+        $this->psService = new ProtectedShopsDocumentService();
+
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
         $data['shopId'] = $shopId;
         $data['document'] = $this->psService->getDocument($shopId, 'agb');
-        var_dump($data); exit;
+
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
 }
