@@ -5,6 +5,7 @@ namespace ProtectedShops\Controllers;
 use Plenty\Plugin\Controller;
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Plugin\ConfigRepository;
+use Plenty\Modules\Frontend\LegalInformation\Contracts\LegalInformationRepositoryContract;
 
 class ProtectedShopsController extends Controller
 {
@@ -13,12 +14,14 @@ class ProtectedShopsController extends Controller
      */
     private $apiUrl = 'api.stage.protectedshops.de';
 
-    public function protectedShopsInfo(Twig $twig, ConfigRepository $config):string
+    public function protectedShopsInfo(Twig $twig, ConfigRepository $config, LegalInformationRepositoryContract $legalinfoRepository):string
     {
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
         $data['shopId'] = $shopId;
         $remoteResponse = $this->getDocument($shopId, 'agb');
         $data['doc'] = json_decode($remoteResponse);
+
+        $legalinfoRepository->save(array('htmlText' => $data['doc']['content']), 1, 'de', 'TermsConditions');
 
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
