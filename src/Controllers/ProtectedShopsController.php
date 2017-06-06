@@ -17,7 +17,7 @@ class ProtectedShopsController extends Controller
     {
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
         $data['shopId'] = $shopId;
-        $data['document'] = $this->getDocument($shopId, 'agb');
+        $data['curl'] = function_exists('curl_version');
 
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
