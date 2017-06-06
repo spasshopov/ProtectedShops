@@ -1,0 +1,12 @@
+{
+  "defaultEntryPoint": "index.html",
+  "namespace": "ProtectedShops",
+  "menuEntries": [
+    {
+      "label": "ProtectedShops",
+      "menu": "start",
+      "urlKey": "protectedshops-documents",
+      "entryPoint": "index.html"
+    }
+  ]
+}
