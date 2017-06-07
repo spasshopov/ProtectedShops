@@ -21,7 +21,7 @@ class ProtectedShopsController extends Controller
         $remoteResponse = $this->getDocument($shopId, 'agb');
         $data['doc'] = json_decode($remoteResponse);
 
-        $legalinfoRepository->save(array('htmlText' => $data['doc']['content']), 1, 'de', 'TermsConditions');
+        $legalinfoRepository->save(array('htmlText' => $data['doc']['content']), 30383, 'de', 'TermsConditions');
 
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
