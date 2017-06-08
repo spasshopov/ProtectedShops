@@ -4,13 +4,28 @@
     "key"       : "shopId",
     "label"     : "Shop ID from protectedShops",
     "type"      : "text",
-    "default"   : "Shop"
+    "default"   : "ProtectedShop ShopID"
   },
   {
     "tab"       : "ProtectedShops",
     "key"       : "plentyId",
     "label"     : "Your unique plenty ID",
     "type"      : "text",
-    "default"   : "Plenty"
+    "default"   : "Plenty ID"
+  },
+  {
+    "tab"           : "ProtectedShops",
+    "key"           : "legalTexts",
+    "label"         : "Select the documents you want to be updated",
+    "type"          : "checkbox",
+    "default"       : "false",
+    "possibleValues":
+    {
+      "TermsConditions"     : "TermsConditions",
+      "CancellationRights"  : "CancellationRights",
+      "PrivacyPolicy"       : "PrivacyPolicy",
+      "LegalDisclosure"     : "LegalDisclosure",
+      "WithdrawalForm"      : "WithdrawalForm"
+    }
   }
 ]

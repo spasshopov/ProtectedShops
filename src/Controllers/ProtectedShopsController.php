@@ -17,11 +17,12 @@ class ProtectedShopsController extends Controller
     public function protectedShopsInfo(Twig $twig, ConfigRepository $config, LegalInformationRepositoryContract $legalinfoRepository):string
     {
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
+        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
         $data['shopId'] = $shopId;
         $remoteResponse = $this->getDocument($shopId, 'agb');
         $data['doc'] = json_decode($remoteResponse);
 
-        $legalinfoRepository->save(array('htmlText' => $data['doc']['content']), 30383, 'de', 'TermsConditions');
+        $legalinfoRepository->save(array('htmlText' => $data['doc']['content']), $plentyId, 'de', 'TermsConditions');
 
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
