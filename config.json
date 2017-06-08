@@ -17,7 +17,7 @@
     "tab"           : "ProtectedShops",
     "key"           : "legalTexts",
     "label"         : "Select the documents you want to be updated",
-    "type"          : "checkbox",
+    "type"          : "multi_select",
     "default"       : "false",
     "possibleValues":
     {
