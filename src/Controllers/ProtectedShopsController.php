@@ -14,6 +14,12 @@ class ProtectedShopsController extends Controller
      */
     private $apiUrl = 'api.stage.protectedshops.de';
 
+    /**
+     * @param Twig $twig
+     * @param ConfigRepository $config
+     * @param LegalInformationRepositoryContract $legalinfoRepository
+     * @return string
+     */
     public function protectedShopsInfo(Twig $twig, ConfigRepository $config, LegalInformationRepositoryContract $legalinfoRepository):string
     {
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
@@ -22,7 +28,7 @@ class ProtectedShopsController extends Controller
         $remoteResponse = $this->getDocument($shopId, 'agb');
         $data['doc'] = json_decode($remoteResponse);
 
-        $legalinfoRepository->save(array('htmlText' => $data['doc']['content']), $plentyId, 'de', 'TermsConditions');
+        $data['legal'] = $legalinfoRepository->save(array('htmlText' => $data['doc']['content']), $plentyId, 'de', 'TermsConditions')->toArray();
 
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
