@@ -8,6 +8,15 @@ use Plenty\Modules\Frontend\LegalInformation\Contracts\LegalInformationRepositor
 
 class ProtectedShopsCronHandler extends CronHandler
 {
+    /**
+     * @var string
+     */
+    private $apiUrl = 'api.stage.protectedshops.de';
+
+    /**
+     * @param ConfigRepository $config
+     * @param LegalInformationRepositoryContract $legalInfoRepository
+     */
     public function handle(ConfigRepository $config, LegalInformationRepositoryContract $legalInfoRepository):void
     {
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
