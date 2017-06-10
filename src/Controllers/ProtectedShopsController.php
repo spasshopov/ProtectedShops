@@ -18,46 +18,89 @@ class ProtectedShopsController extends Controller
     private $apiUrl = 'api.stage.protectedshops.de';
 
     /**
+     * @var array
+     */
+    private $docMap = [
+        'TermsConditions'    => 'AGB',
+        'CancellationRights' => 'Widerruf',
+        'PrivacyPolicy'      => 'Datenschutz',
+        'LegalDisclosure'    => 'Impressum'
+    ];
+
+    /**
+     * @var AccountHelper
+     */
+    private $accountHelper;
+
+    /**
+     * @var LegalInformationRepositoryContract
+     */
+    private $legalInfoRepository;
+
+    /**
+     * ProtectedShopsController constructor.
+     * @param AccountHelper $accountHelper
+     * @param LegalInformationRepositoryContract $legalInfoRepository
+     */
+    public function __construct(AccountHelper $accountHelper, LegalInformationRepositoryContract $legalInfoRepository)
+    {
+        $this->accountHelper = $accountHelper;
+        $this->legalInfoRepository = $legalInfoRepository;
+    }
+
+    /**
      * @param Twig $twig
      * @param ConfigRepository $config
-     * @param LegalInformationRepositoryContract $legalinfoRepository
      * @return string
      */
-    public function protectedShopsInfo(Twig $twig, ConfigRepository $config, CronContainer $cron, AuthHelper $authHelper, LegalInformationRepositoryContract $legalinfoRepository):string
+    public function protectedShopsInfo(Twig $twig, ConfigRepository $config):string
+    {
+        $shopId = $config->get('ProtectedShopsForPlenty.shopId');
+        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+        $legalTextsToSync = $config->get('ProtectedShopsForPlenty.legalTexts');
+
+        $data['shopId'] = $shopId;
+
+        foreach ($legalTextsToSync as $legalText) {
+            $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
+            $data['doc'] = json_decode($remoteResponse);
+            $this->updateDocument($data['doc'], $plentyId, $legalText);
+        }
+
+        //$cron->add(CronContainer::EVERY_FIFTEEN_MINUTES, "ProtectedShops\\Cron\\ProtectedShopsCronHandler");
+
+        return $twig->render('ProtectedShopsForPlenty::content.info', $data);
+    }
+
+    /**
+     * @param $document
+     * @param $plentyId
+     * @param $legalText
+     */
+    private function updateDocument($document, $plentyId, $legalText):void
     {
         try {
-            $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-            $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-            $data['shopId'] = $shopId;
-            $remoteResponse = $this->getDocument($shopId, 'agb');
-            $data['doc'] = json_decode($remoteResponse);
-
-
-            $authHelper->processUnguarded(
-                function () use ($legalinfoRepository, $shopId, $plentyId, $data) {
+            $legalInfoRepository = $this->legalInfoRepository;
+            $this->accountHelper->processUnguarded(
+                function () use ($document, $legalInfoRepository, $plentyId, $legalText) {
                     try {
-                        foreach ($data['doc']  as $key => $value) {
+                        foreach ($document  as $key => $value) {
                             if ('content' === $key) {
-                                echo "Updating ..." . $plentyId . " " . 'TermsConditions';
-                                $legalinfoRepository->save(array('htmlText' => $value), $plentyId, 'de', 'TermsConditions');
+                                echo "Updating ..." . $plentyId . " " . $legalText;
+                                $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
                             }
                         }
-
                     } catch (\Exception $e) {
+                        echo "Failed ..." . $plentyId . " " . $legalText;
                         echo $e->getMessage();
                     }
 
                 }
             );
 
-
         } catch (\Exception $e) {
-            $data['plentyId'] = $e->getMessage();
+            echo $e->getMessage();
         }
-
-        //$cron->add(CronContainer::EVERY_FIFTEEN_MINUTES, "ProtectedShops\\Cron\\ProtectedShopsCronHandler");
-
-        return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
 
     /**

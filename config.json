@@ -24,8 +24,7 @@
       "TermsConditions"     : "TermsConditions",
       "CancellationRights"  : "CancellationRights",
       "PrivacyPolicy"       : "PrivacyPolicy",
-      "LegalDisclosure"     : "LegalDisclosure",
-      "WithdrawalForm"      : "WithdrawalForm"
+      "LegalDisclosure"     : "LegalDisclosure"
     }
   }
 ]
