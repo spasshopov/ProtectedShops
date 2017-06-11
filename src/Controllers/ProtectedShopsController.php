@@ -28,9 +28,9 @@ class ProtectedShopsController extends Controller
     ];
 
     /**
-     * @var AccountHelper
+     * @var AuthHelper
      */
-    private $accountHelper;
+    private $authHelper;
 
     /**
      * @var LegalInformationRepositoryContract
@@ -39,12 +39,12 @@ class ProtectedShopsController extends Controller
 
     /**
      * ProtectedShopsController constructor.
-     * @param AccountHelper $accountHelper
+     * @param AuthHelper $authHelper
      * @param LegalInformationRepositoryContract $legalInfoRepository
      */
-    public function __construct(AccountHelper $accountHelper, LegalInformationRepositoryContract $legalInfoRepository)
+    public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository)
     {
-        $this->accountHelper = $accountHelper;
+        $this->authHelper = $authHelper;
         $this->legalInfoRepository = $legalInfoRepository;
     }
 
@@ -81,7 +81,7 @@ class ProtectedShopsController extends Controller
     {
         try {
             $legalInfoRepository = $this->legalInfoRepository;
-            $this->accountHelper->processUnguarded(
+            $this->authHelper->processUnguarded(
                 function () use ($document, $legalInfoRepository, $plentyId, $legalText) {
                     try {
                         foreach ($document  as $key => $value) {
