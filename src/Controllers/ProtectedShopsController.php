@@ -28,9 +28,9 @@ class ProtectedShopsController extends Controller
     ];
 
     /**
-     * @var AccountHelper
+     * @var AuthHelper
      */
-    private $accountHelper;
+    private $authhelper;
 
     /**
      * @var LegalInformationRepositoryContract
@@ -39,12 +39,12 @@ class ProtectedShopsController extends Controller
 
     /**
      * ProtectedShopsController constructor.
-     * @param AccountHelper $accountHelper
+     * @param AuthHelper $accountHelper
      * @param LegalInformationRepositoryContract $legalInfoRepository
      */
-    public function __construct(AccountHelper $accountHelper, LegalInformationRepositoryContract $legalInfoRepository)
+    public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository)
     {
-        $this->accountHelper = $accountHelper;
+        $this->authhelper = $authHelper;
         $this->legalInfoRepository = $legalInfoRepository;
     }
 
@@ -53,7 +53,7 @@ class ProtectedShopsController extends Controller
      * @param ConfigRepository $config
      * @return string
      */
-    public function protectedShopsInfo(Twig $twig, ConfigRepository $config):string
+    public function (Twig $twig, ConfigRepository $config):string
     {
         $shopId = $config->get('ProtectedShopsForPlenty.shopId');
         $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
@@ -70,58 +70,6 @@ class ProtectedShopsController extends Controller
         //$cron->add(CronContainer::EVERY_FIFTEEN_MINUTES, "ProtectedShops\\Cron\\ProtectedShopsCronHandler");
 
         return $twig->render('ProtectedShopsForPlenty::content.info', $data);
-    }
-
-    public function updateAGB(Twig $twig, ConfigRepository $config):string
-    {
-        $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-        $legalTextsToSync = $config->get('ProtectedShopsForPlenty.legalTexts');
-
-        $remoteResponse = $this->getDocument($shopId, $this->docMap['TermsConditions']);
-
-        $this->updateDocument(json_decode($remoteResponse), $plentyId, 'TermsConditions');
-
-        return $twig->render('ProtectedShopsForPlenty::content.info');
-    }
-
-    public function updateCancellationRights(Twig $twig, ConfigRepository $config):string
-    {
-        $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-        $legalTextsToSync = $config->get('ProtectedShopsForPlenty.legalTexts');
-
-        $remoteResponse = $this->getDocument($shopId, $this->docMap['TermsConditions']);
-
-        $this->updateDocument(json_decode($remoteResponse), $plentyId, 'CancellationRights');
-
-        return $twig->render('ProtectedShopsForPlenty::content.info');
-    }
-
-    public function updatePrivacyPolicy(Twig $twig, ConfigRepository $config):string
-    {
-        $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-        $legalTextsToSync = $config->get('ProtectedShopsForPlenty.legalTexts');
-
-        $remoteResponse = $this->getDocument($shopId, $this->docMap['TermsConditions']);
-
-        $this->updateDocument(json_decode($remoteResponse), $plentyId, 'PrivacyPolicy');
-
-        return $twig->render('ProtectedShopsForPlenty::content.info');
-    }
-
-    public function updateLegalDisclosure(Twig $twig, ConfigRepository $config):string
-    {
-        $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-        $legalTextsToSync = $config->get('ProtectedShopsForPlenty.legalTexts');
-
-        $remoteResponse = $this->getDocument($shopId, $this->docMap['TermsConditions']);
-
-        $this->updateDocument(json_decode($remoteResponse), $plentyId, 'LegalDisclosure');
-
-        return $twig->render('ProtectedShopsForPlenty::content.info');
     }
 
     /**
