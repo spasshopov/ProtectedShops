@@ -30,7 +30,7 @@ class ProtectedShopsController extends Controller
     /**
      * @var AuthHelper
      */
-    private $authhelper;
+    private $authHelper;
 
     /**
      * @var LegalInformationRepositoryContract
@@ -44,7 +44,7 @@ class ProtectedShopsController extends Controller
      */
     public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository)
     {
-        $this->authhelper = $authHelper;
+        $this->authHelper = $authHelper;
         $this->legalInfoRepository = $legalInfoRepository;
     }
 
@@ -53,52 +53,56 @@ class ProtectedShopsController extends Controller
      * @param ConfigRepository $config
      * @return string
      */
-    public function (Twig $twig, ConfigRepository $config):string
+    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config):string
     {
-        $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-        $legalTextsToSync = $config->get('ProtectedShopsForPlenty.legalTexts');
+        try {
+            $shopId = $config->get('ProtectedShopsForPlenty.shopId');
+            $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
+            $data['shopId'] = $shopId;
+            $documents = [];
 
-        $data['shopId'] = $shopId;
+            foreach ($legalTextsToSync as $legalText) {
+                $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
+                $documents[$legalText] = json_decode($remoteResponse);
+                $data['updated'][] = $legalText;
+            }
 
-        foreach ($legalTextsToSync as $legalText) {
-            $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
-            $data['doc'] = json_decode($remoteResponse);
-            $this->updateDocument($data['doc'], $plentyId, $legalText);
+            $data['success'] = $this->updateDocuments($documents, $plentyId);
+            return $twig->render('ProtectedShopsForPlenty::content.info', $data);
+            //$cron->add(CronContainer::EVERY_FIFTEEN_MINUTES, "ProtectedShops\\Cron\\ProtectedShopsCronHandler");
+        } catch (\Exception $e) {
+            $data['success'] = false;
+            return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         }
-
-        //$cron->add(CronContainer::EVERY_FIFTEEN_MINUTES, "ProtectedShops\\Cron\\ProtectedShopsCronHandler");
-
-        return $twig->render('ProtectedShopsForPlenty::content.info', $data);
     }
 
     /**
-     * @param $document
+     * @param $documents
      * @param $plentyId
-     * @param $legalText
+     * @return bool
      */
-    private function updateDocument($document, $plentyId, $legalText):void
+    private function updateDocuments($documents, $plentyId):bool
     {
-        try {
-            $legalInfoRepository = $this->legalInfoRepository;
-            $this->accountHelper->processUnguarded(
-                function () use ($document, $legalInfoRepository, $plentyId, $legalText) {
-                    try {
-                        foreach ($document  as $key => $value) {
+        $legalInfoRepository = $this->legalInfoRepository;
+        $this->authHelper->processUnguarded(
+            function () use ($documents, $legalInfoRepository, $plentyId) {
+                try {
+                    foreach($documents as $legalText => $document) {
+                        foreach ($document as $key => $value) {
                             if ('content' === $key) {
                                 $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
+                                break;
                             }
                         }
-                    } catch (\Exception $e) {
-                        echo $e->getMessage();
                     }
-
+                    return true;
+                } catch (\Exception $e) {
+                    return false;
                 }
-            );
-
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
+            }
+        );
+        return true;
     }
 
     /**
@@ -106,7 +110,7 @@ class ProtectedShopsController extends Controller
      * @param $documentType
      * @return string
      */
-    public function getDocument($shopId, $documentType):string
+    private function getDocument($shopId, $documentType):string
     {
         $apiFunction = 'documents/' . $documentType . '/contentformat/html';
         $response = $this->apiRequest($shopId, $apiFunction);

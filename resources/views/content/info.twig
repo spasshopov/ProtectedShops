@@ -1,3 +1,22 @@
-<h1>Protected Shops: {{ shopId }}</h1>
-
-<h1>Plenty ID: {{ plentyId }}</h1>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Protected Shops Update Documents</title>
+    </head>
+    <body>
+        <div class="row">
+            {% if success %}
+                {% for docTitle in updated %}
+                    <div class="col-xs-3">
+                        <div class="tile">
+                            <img src="img/icons/svg/retina.svg" alt="Compas" class="tile-image big-illustration">
+                            <h3 class="tile-title">{{ docTitle }}</h3>
+                            <p>Succesfully updated</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </body>
+</html>
