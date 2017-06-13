@@ -5,9 +5,13 @@ namespace ProtectedShops\Cron;
 use Plenty\Modules\Cron\Contracts\CronHandler;
 use Plenty\Plugin\ConfigRepository;
 use Plenty\Modules\Frontend\LegalInformation\Contracts\LegalInformationRepositoryContract;
+use Plenty\Modules\Authorization\Services\AuthHelper;
+use Plenty\Plugin\Log\Loggable;
 
 class ProtectedShopsCronHandler extends CronHandler
 {
+    use Loggable;
+
     /**
      * @var string
      */
@@ -17,20 +21,58 @@ class ProtectedShopsCronHandler extends CronHandler
      * @param ConfigRepository $config
      * @param LegalInformationRepositoryContract $legalInfoRepository
      */
-    public function handle(ConfigRepository $config, LegalInformationRepositoryContract $legalInfoRepository):void
+    public function handle(ConfigRepository $config, LegalInformationRepositoryContract $legalInfoRepository, AuthHelper $authHelper):void
     {
-        $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-        $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+        try {
+            $shopId = $config->get('ProtectedShopsForPlenty.shopId');
+            $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
+            $data['shopId'] = $shopId;
+            $documents = [];
 
-        if (!$shopId || !$plentyId) {
-            return;
+            foreach ($legalTextsToSync as $legalText) {
+                $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
+                $documents[$legalText] = json_decode($remoteResponse);
+                $data['updated'][] = $legalText;
+            }
+
+            if (!$this->updateDocuments($authHelper, $legalInfoRepository, $documents, $plentyId)) {
+                $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', 'Could not update legal texts');
+            }
+
+        } catch (\Exception $e) {
+            $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $e->getMessage());
         }
+    }
 
-        $remoteResponse = json_decode($this->getDocument($shopId, 'agb'));
 
-        if ($remoteResponse['content']) {
-            $legalInfoRepository->save(array('htmlText' => $remoteResponse['content']), $plentyId, 'de', 'TermsConditions');
-        }
+    /**
+     * @param AuthHelper $authHelper
+     * @param $documents
+     * @param $plentyId
+     * @return bool
+     */
+    private function updateDocuments(AuthHelper $authHelper, AuthHelper $legalInfoRepository, $documents, $plentyId):bool
+    {
+        $legalInfoRepository = $this->legalInfoRepository;
+        $authHelper->processUnguarded(
+            function () use ($documents, $legalInfoRepository, $plentyId) {
+                try {
+                    foreach($documents as $legalText => $document) {
+                        foreach ($document as $key => $value) {
+                            if ('content' === $key) {
+                                $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
+                                break;
+                            }
+                        }
+                    }
+                    return true;
+                } catch (\Exception $e) {
+                    return false;
+                }
+            }
+        );
+        return true;
     }
 
     /**

@@ -39,7 +39,7 @@ class ProtectedShopsController extends Controller
 
     /**
      * ProtectedShopsController constructor.
-     * @param AuthHelper $accountHelper
+     * @param AuthHelper $authHelper
      * @param LegalInformationRepositoryContract $legalInfoRepository
      */
     public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository)
