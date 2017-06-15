@@ -73,16 +73,47 @@ class ProtectedShopsController extends Controller
 
             foreach ($legalTextsToSync as $legalText) {
                 $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
-                $documents[$legalText] = json_decode($remoteResponse);
-                $data['updated'][] = $legalText;
+                $document = json_decode($remoteResponse);
+                $data['updated'][] = [
+                    'type' => $legalText,
+                    'success' => $this->updateDocument($document, $plentyId, $legalText)
+                ];
             }
-
-            $data['success'] = $this->updateDocuments($documents, $plentyId);
+            $data['success'] = true;
+            //$data['success'] = $this->updateDocuments($documents, $plentyId);
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         } catch (\Exception $e) {
             $data['success'] = false;
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         }
+    }
+
+    /**
+     * @param $document
+     * @param $plentyId
+     * @return bool
+     */
+    private function updateDocument($document, $plentyId, $legalText):bool
+    {
+        $legalInfoRepository = $this->legalInfoRepository;
+        $success = false;
+        $this->authHelper->processUnguarded(
+            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success) {
+                try {
+                    foreach ($document as $key => $value) {
+                        if ('content' === $key) {
+                            $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
+                            $success = true;
+                            break;
+                        }
+                    }
+                } catch (\Exception $e) {
+                    //ToDo: log failure
+                }
+            }
+        );
+
+        return $success;
     }
 
     /**

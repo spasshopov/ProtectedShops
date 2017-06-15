@@ -8,11 +8,11 @@
     <body>
         <div class="row">
             {% if success %}
-                {% for docTitle in updated %}
+                {% for docs in updated %}
                     <div class="col-xs-3">
                         <div class="tile">
-                            <h3 class="tile-title">{{ docTitle }}</h3>
-                            <p>Succesfully updated</p>
+                            <h3 class="tile-title">{{ docs.type }}</h3>
+                            <p>{% if docs.success  %}Succesfully updated{% else %} Not updated{% endif %}</p>
                         </div>
                     </div>
                 {% endfor %}
