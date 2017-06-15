@@ -9,9 +9,12 @@ use Plenty\Plugin\ConfigRepository;
 use Plenty\Modules\Frontend\LegalInformation\Contracts\LegalInformationRepositoryContract;
 use Plenty\Modules\Cron\Services\CronContainer;
 use Plenty\Modules\Authorization\Services\AuthHelper;
+use Plenty\Plugin\Log\Loggable;
 
 class ProtectedShopsController extends Controller
 {
+    use Loggable;
+
     /**
      * @var string
      */
@@ -69,7 +72,6 @@ class ProtectedShopsController extends Controller
             }
             $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
             $data['shopId'] = $shopId;
-            $documents = [];
 
             foreach ($legalTextsToSync as $legalText) {
                 $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
@@ -84,6 +86,7 @@ class ProtectedShopsController extends Controller
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         } catch (\Exception $e) {
             $data['success'] = false;
+            $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $e->getMessage());
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         }
     }
@@ -96,9 +99,10 @@ class ProtectedShopsController extends Controller
     private function updateDocument($document, $plentyId, $legalText):bool
     {
         $legalInfoRepository = $this->legalInfoRepository;
+        $logger = $this->getLogger(__FUNCTION__);
         $success = false;
         $this->authHelper->processUnguarded(
-            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success) {
+            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success, $logger) {
                 try {
                     foreach ($document as $key => $value) {
                         if ('content' === $key) {
@@ -108,40 +112,12 @@ class ProtectedShopsController extends Controller
                         }
                     }
                 } catch (\Exception $e) {
-                    //ToDo: log failure
+                    $logger->error('ProtectedShops::Sync error: ', $e->getMessage());
                 }
             }
         );
 
         return $success;
-    }
-
-    /**
-     * @param $documents
-     * @param $plentyId
-     * @return bool
-     */
-    private function updateDocuments($documents, $plentyId):bool
-    {
-        $legalInfoRepository = $this->legalInfoRepository;
-        $this->authHelper->processUnguarded(
-            function () use ($documents, $legalInfoRepository, $plentyId) {
-                try {
-                    foreach($documents as $legalText => $document) {
-                        foreach ($document as $key => $value) {
-                            if ('content' === $key) {
-                                $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
-                                break;
-                            }
-                        }
-                    }
-                    return true;
-                } catch (\Exception $e) {
-                    return false;
-                }
-            }
-        );
-        return true;
     }
 
     /**

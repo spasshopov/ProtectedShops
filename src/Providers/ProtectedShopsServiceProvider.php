@@ -21,6 +21,6 @@ class ProtectedShopsServiceProvider extends ServiceProvider
      */
     public function boot(CronContainer $container)
     {
-        $container->add(CronContainer::DAILY, ProtectedShopsCronHandler::class);
+        $container->add(CronContainer::EVERY_FIFTEEN_MINUTES, ProtectedShopsCronHandler::class);
     }
 }

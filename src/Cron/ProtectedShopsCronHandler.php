@@ -73,7 +73,6 @@ class ProtectedShopsCronHandler extends CronHandler
      */
     private function updateDocuments(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, $documents, $plentyId):bool
     {
-        $legalInfoRepository = $this->legalInfoRepository;
         $authHelper->processUnguarded(
             function () use ($documents, $legalInfoRepository, $plentyId) {
                 try {
