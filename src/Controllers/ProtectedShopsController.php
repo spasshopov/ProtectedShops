@@ -66,12 +66,12 @@ class ProtectedShopsController extends Controller
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-            $apiUrl = $config->get('ProtectedShopsForPlenty.apiUrl');
-            if ($apiUrl) {
+            $useStaging = $config->get('ProtectedShopsForPlenty.useStaging');
+            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
+
+            if ($useStaging) {
                 $this->apiUrl = $this->apiStageUrl;
             }
-            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
-            $data['shopId'] = $shopId;
 
             foreach ($legalTextsToSync as $legalText) {
                 $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
@@ -81,8 +81,8 @@ class ProtectedShopsController extends Controller
                     'success' => $this->updateDocument($document, $plentyId, $legalText)
                 ];
             }
+            
             $data['success'] = true;
-            //$data['success'] = $this->updateDocuments($documents, $plentyId);
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         } catch (\Exception $e) {
             $data['success'] = false;

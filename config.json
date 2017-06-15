@@ -29,7 +29,7 @@
   },
   {
     "tab"       : "ProtectedShops",
-    "key"       : "apiUrl",
+    "key"       : "useStaging",
     "label"     : "Use ProtectedShops staging api",
     "type"      : "checkbox",
     "default"   : "ProtectedShop ShopID"

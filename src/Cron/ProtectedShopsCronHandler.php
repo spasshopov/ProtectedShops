@@ -41,56 +41,54 @@ class ProtectedShopsCronHandler extends CronHandler
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-            $apiUrl = $config->get('ProtectedShopsForPlenty.apiUrl');
-            if ($apiUrl) {
+            $useStaging = $config->get('ProtectedShopsForPlenty.useStaging');
+            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
+
+            if ($useStaging) {
                 $this->apiUrl = $this->apiStageUrl;
             }
-            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
-            $data['shopId'] = $shopId;
-            $documents = [];
 
             foreach ($legalTextsToSync as $legalText) {
                 $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
-                $documents[$legalText] = json_decode($remoteResponse);
-                $data['updated'][] = $legalText;
+                $document = json_decode($remoteResponse);
+                if (!$this->updateDocument($authHelper, $legalInfoRepository, $document, $plentyId, $legalText)) {
+                    $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $legalText . ' could not be updated');
+                }
             }
-
-            if (!$this->updateDocuments($authHelper, $legalInfoRepository, $documents, $plentyId)) {
-                $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', 'Could not update legal texts');
-            }
-
         } catch (\Exception $e) {
             $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $e->getMessage());
         }
     }
 
-
     /**
      * @param AuthHelper $authHelper
-     * @param $documents
+     * @param LegalInformationRepositoryContract $legalInfoRepository
+     * @param $document
      * @param $plentyId
+     * @param $legalText
      * @return bool
      */
-    private function updateDocuments(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, $documents, $plentyId):bool
+    function updateDocument(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, $document, $plentyId, $legalText):bool
     {
+        $logger = $this->getLogger(__FUNCTION__);
+        $success = false;
         $authHelper->processUnguarded(
-            function () use ($documents, $legalInfoRepository, $plentyId) {
+            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success, $logger) {
                 try {
-                    foreach($documents as $legalText => $document) {
-                        foreach ($document as $key => $value) {
-                            if ('content' === $key) {
-                                $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
-                                break;
-                            }
+                    foreach ($document as $key => $value) {
+                        if ('content' === $key) {
+                            $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
+                            $success = true;
+                            break;
                         }
                     }
-                    return true;
                 } catch (\Exception $e) {
-                    return false;
+                    $logger->error('ProtectedShops::Sync error: ', $e->getMessage());
                 }
             }
         );
-        return true;
+
+        return $success;
     }
 
     /**
