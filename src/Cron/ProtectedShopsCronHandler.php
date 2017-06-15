@@ -15,7 +15,22 @@ class ProtectedShopsCronHandler extends CronHandler
     /**
      * @var string
      */
-    private $apiUrl = 'api.stage.protectedshops.de';
+    private $apiStageUrl = 'api.stage.protectedshops.de';
+
+    /**
+     * @var string
+     */
+    private $apiUrl = 'api.protectedshops.de';
+
+    /**
+     * @var array
+     */
+    private $docMap = [
+        'TermsConditions'    => 'AGB',
+        'CancellationRights' => 'Widerruf',
+        'PrivacyPolicy'      => 'Datenschutz',
+        'LegalDisclosure'    => 'Impressum'
+    ];
 
     /**
      * @param ConfigRepository $config
@@ -26,6 +41,10 @@ class ProtectedShopsCronHandler extends CronHandler
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+            $apiUrl = $config->get('ProtectedShopsForPlenty.apiUrl');
+            if ($apiUrl) {
+                $this->apiUrl = $this->apiStageUrl;
+            }
             $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
             $data['shopId'] = $shopId;
             $documents = [];
@@ -52,7 +71,7 @@ class ProtectedShopsCronHandler extends CronHandler
      * @param $plentyId
      * @return bool
      */
-    private function updateDocuments(AuthHelper $authHelper, AuthHelper $legalInfoRepository, $documents, $plentyId):bool
+    private function updateDocuments(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, $documents, $plentyId):bool
     {
         $legalInfoRepository = $this->legalInfoRepository;
         $authHelper->processUnguarded(

@@ -15,7 +15,12 @@ class ProtectedShopsController extends Controller
     /**
      * @var string
      */
-    private $apiUrl = 'api.stage.protectedshops.de';
+    private $apiStageUrl = 'api.stage.protectedshops.de';
+
+    /**
+     * @var string
+     */
+    private $apiUrl = 'api.protectedshops.de';
 
     /**
      * @var array
@@ -58,6 +63,10 @@ class ProtectedShopsController extends Controller
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+            $apiUrl = $config->get('ProtectedShopsForPlenty.apiUrl');
+            if ($apiUrl) {
+                $this->apiUrl = $this->apiStageUrl;
+            }
             $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
             $data['shopId'] = $shopId;
             $documents = [];
@@ -70,7 +79,6 @@ class ProtectedShopsController extends Controller
 
             $data['success'] = $this->updateDocuments($documents, $plentyId);
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
-            //$cron->add(CronContainer::EVERY_FIFTEEN_MINUTES, "ProtectedShops\\Cron\\ProtectedShopsCronHandler");
         } catch (\Exception $e) {
             $data['success'] = false;
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);

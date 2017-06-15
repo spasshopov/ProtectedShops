@@ -26,5 +26,12 @@
       "PrivacyPolicy"       : "PrivacyPolicy",
       "LegalDisclosure"     : "LegalDisclosure"
     }
+  },
+  {
+    "tab"       : "ProtectedShops",
+    "key"       : "apiUrl",
+    "label"     : "Use ProtectedShops staging api",
+    "type"      : "checkbox",
+    "default"   : "ProtectedShop ShopID"
   }
 ]
