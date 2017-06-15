@@ -69,7 +69,7 @@ class ProtectedShopsController extends Controller
             $useStaging = $config->get('ProtectedShopsForPlenty.useStaging');
             $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
 
-            if ($useStaging) {
+            if ($useStaging === 'true') {
                 $this->apiUrl = $this->apiStageUrl;
             }
 
@@ -81,7 +81,7 @@ class ProtectedShopsController extends Controller
                     'success' => $this->updateDocument($document, $plentyId, $legalText)
                 ];
             }
-            
+
             $data['success'] = true;
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         } catch (\Exception $e) {

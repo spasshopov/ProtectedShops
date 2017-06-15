@@ -32,6 +32,6 @@
     "key"       : "useStaging",
     "label"     : "Use ProtectedShops staging api",
     "type"      : "checkbox",
-    "default"   : "ProtectedShop ShopID"
+    "default"   : "false"
   }
 ]

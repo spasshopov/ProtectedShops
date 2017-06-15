@@ -44,7 +44,7 @@ class ProtectedShopsCronHandler extends CronHandler
             $useStaging = $config->get('ProtectedShopsForPlenty.useStaging');
             $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
 
-            if ($useStaging) {
+            if ($useStaging === 'true') {
                 $this->apiUrl = $this->apiStageUrl;
             }
 
