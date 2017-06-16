@@ -1,8 +1,18 @@
 {
   "name"              :"ProtectedShopsForPlenty",
+  "marketplaceName"   : {"de":"ProtectedShops für viel","en":"ProtectedShops for Plenty"},
   "description"       :"Protected shops plugin for plenty helps you keep your legal documents up to date",
   "namespace"         :"ProtectedShops",
   "author"            :"spas.shopov@dnhsoft.com",
+  "email"             :"info@protectedshops.de",
   "type"              :"template",
-  "serviceProvider"   :"ProtectedShops\\Providers\\ProtectedShopsServiceProvider"
+  "serviceProvider"   :"ProtectedShops\\Providers\\ProtectedShopsServiceProvider",
+  "version"           : "1.0",
+  "price"             : 0.00,
+  "keywords"          : ["plugins", "legal texts"],
+  "license"           : "AGPL-3.0",
+  "pluginIcon"        : "icon_plugin_xs.png",
+  "shortDescription"  : {"de":"ProtectedShops für viel","en":"ProtectedShops for Plenty"},
+  "categories"        : ["3517", "3518"],
+  "authorIcon"        : "icon_author_xs.png"
 }
