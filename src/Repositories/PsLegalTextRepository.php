@@ -45,16 +45,12 @@ class PsLegalTextRepository implements PsLegalTextContract
     /**
      * List all items of the To Do list
      *
-     * @return ToDo[]
+     * @return PsLegalText[]
      */
     public function getPsLegalTexts(): array
     {
         $database = pluginApp(DataBase::class);
 
-        $id = $this->getCurrentContactId();
-        /**
-         * @var PsLegalText[] $toDoList
-         */
         return $database->query(PsLegalText::class)->get();
     }
 
