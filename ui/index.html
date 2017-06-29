@@ -11,7 +11,16 @@
                     <img src="../images/pencils.svg" alt="Sync legal texts" class="tile-image big-illustration">
                     <h3 class="tile-title">Update your legal texts now</h3>
                     <p>All selected legal texts will be updated</p>
-                    <a class="btn btn-primary btn-large btn-block" href="/protectedshops/update">Update Now</a>
+                    <form action="/protectedshops/update" method="POST">
+                        <label>Legal texts</label>
+                        <input type="checkbox" name="psLegalTexts[]" value="TermsConditions">
+                        <input type="checkbox" name="psLegalTexts[]" value="CancellationRights">
+                        <input type="checkbox" name="psLegalTexts[]" value="PrivacyPolicy">
+                        <input type="checkbox" name="psLegalTexts[]" value="LegalDisclosure">
+
+                        <input type="submit" class="btn btn-primary btn-large btn-block" value="Update Now" />
+                    </form>
+
                 </div>
             </div>
         </div>

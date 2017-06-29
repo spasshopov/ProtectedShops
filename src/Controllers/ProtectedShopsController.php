@@ -10,6 +10,7 @@ use Plenty\Modules\Frontend\LegalInformation\Contracts\LegalInformationRepositor
 use Plenty\Modules\Cron\Services\CronContainer;
 use Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Plugin\Log\Loggable;
+use ProtectedShops\Repositories\PsLegalTextRepository;
 
 class ProtectedShopsController extends Controller
 {
@@ -59,9 +60,10 @@ class ProtectedShopsController extends Controller
     /**
      * @param Twig $twig
      * @param ConfigRepository $config
+     * @param PsLegalTextRepository $psLegalTextRepository
      * @return string
      */
-    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config):string
+    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config, PsLegalTextRepository $psLegalTextRepository):string
     {
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
