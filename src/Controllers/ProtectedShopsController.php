@@ -47,23 +47,29 @@ class ProtectedShopsController extends Controller
     private $legalInfoRepository;
 
     /**
+     * @var PsLegalTextRepository
+     */
+    private $psLegalTextRepository;
+
+    /**
      * ProtectedShopsController constructor.
      * @param AuthHelper $authHelper
      * @param LegalInformationRepositoryContract $legalInfoRepository
+     * @param PsLegalTextRepository $psLegalTextRepository
      */
-    public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository)
+    public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, PsLegalTextRepository $psLegalTextRepository)
     {
         $this->authHelper = $authHelper;
         $this->legalInfoRepository = $legalInfoRepository;
+        $this->psLegalTextRepository = $psLegalTextRepository;
     }
 
     /**
      * @param Twig $twig
      * @param ConfigRepository $config
-     * @param PsLegalTextRepository $psLegalTextRepository
      * @return string
      */
-    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config, PsLegalTextRepository $psLegalTextRepository):string
+    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config):string
     {
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');

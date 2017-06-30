@@ -61,7 +61,7 @@ class PsLegalTextRepository implements PsLegalTextContract
      * @param bool $success
      * @return PsLegalText
      */
-    public function updateTask($id, $success): PsLegalText
+    public function updatePsLegalText($id, $success): PsLegalText
     {
         /**
          * @var DataBase $database

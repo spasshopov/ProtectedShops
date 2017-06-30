@@ -29,15 +29,9 @@ interface PsLegalTextContract
      * Update the PsLegalText
      *
      * @param int $id
+     * @param bool $success
      * @return PsLegalText
      */
-    public function updatePsLegalText($id): PsLegalText;
-
-    /**
-     * Delete PsLegalText
-     *
-     * @param int $id
-     * @return PsLegalText
-     */
-    public function deleteTask($id): PsLegalText;
+    public function updatePsLegalText($id, $success): PsLegalText;
 }
+
