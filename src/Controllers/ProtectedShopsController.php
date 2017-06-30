@@ -11,6 +11,7 @@ use Plenty\Modules\Cron\Services\CronContainer;
 use Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Plugin\Log\Loggable;
 use ProtectedShops\Repositories\PsLegalTextRepository;
+use Plenty\Plugin\Http\Request;
 
 class ProtectedShopsController extends Controller
 {
@@ -69,7 +70,7 @@ class ProtectedShopsController extends Controller
      * @param ConfigRepository $config
      * @return string
      */
-    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config):string
+    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config, Request $request):string
     {
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
@@ -81,6 +82,7 @@ class ProtectedShopsController extends Controller
                 $this->apiUrl = $this->apiStageUrl;
             }
 
+            echo json_encode($request->get('psLegalTexts'));
             foreach ($legalTextsToSync as $legalText) {
                 $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
                 $document = json_decode($remoteResponse);
