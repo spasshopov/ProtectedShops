@@ -68,6 +68,7 @@ class ProtectedShopsController extends Controller
     /**
      * @param Twig $twig
      * @param ConfigRepository $config
+     * @param Request $request
      * @return string
      */
     public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config, Request $request):string
@@ -76,13 +77,15 @@ class ProtectedShopsController extends Controller
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
             $useStaging = $config->get('ProtectedShopsForPlenty.useStaging');
-            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
+            $legalTextsToSync = array_unique($request->get('psLegalTexts'));
+            $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
+
+            echo json_decode($legalTextsFromConfig);
 
             if ($useStaging === 'true') {
                 $this->apiUrl = $this->apiStageUrl;
             }
 
-            echo json_encode($request->get('psLegalTexts'));
             foreach ($legalTextsToSync as $legalText) {
                 $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
                 $document = json_decode($remoteResponse);

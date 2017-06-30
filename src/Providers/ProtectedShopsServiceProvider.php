@@ -17,11 +17,33 @@ class ProtectedShopsServiceProvider extends ServiceProvider
 
     /**
      * @param CronContainer $container
+     * @param PsLegalTextRepository $psLegalTextRepository
      */
-    public function boot(CronContainer $container)
+    public function boot(CronContainer $container, PsLegalTextRepository $psLegalTextRepository)
     {
         $container->add(CronContainer::DAILY, ProtectedShopsCronHandler::class);
         $this->getApplication()->bind(PsLegalTextContract::class, PsLegalTextRepository::class);
+
+        $psLegalTextRepository->createPsLegalText(array(
+            'legalText' => 'TermsConditions',
+            'success' => false,
+            'shouldSync' => false
+        ));
+        $psLegalTextRepository->createPsLegalText(array(
+            'legalText' => 'CancellationRights',
+            'success' => false,
+            'shouldSync' => false
+        ));
+        $psLegalTextRepository->createPsLegalText(array(
+            'legalText' => 'PrivacyPolicy',
+            'success' => false,
+            'shouldSync' => false
+        ));
+        $psLegalTextRepository->createPsLegalText(array(
+            'legalText' => 'LegalDisclosure',
+            'success' => false,
+            'shouldSync' => false
+        ));
     }
 }
 

@@ -5,12 +5,13 @@ namespace ProtectedShops\Models;
 use Plenty\Modules\Plugin\DataBase\Contracts\Model;
 
 /**
- * Class ToDo
+ * Class PsLegalText
  *
  * @property int     $id
  * @property string  $legalText
  * @property int     $updated
  * @property boolean $success
+ * @property boolean $shouldSync
  */
 class PsLegalText extends Model
 {
@@ -18,6 +19,7 @@ class PsLegalText extends Model
     public $legalText;
     public $updated;
     public $success;
+    public $shouldSync;
 
     /**
      * @return string
