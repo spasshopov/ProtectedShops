@@ -29,9 +29,9 @@ interface PsLegalTextContract
      * Update the PsLegalText
      *
      * @param int $id
-     * @param bool $success
+     * @param array $data
      * @return PsLegalText
      */
-    public function updatePsLegalText($id, $success): PsLegalText;
+    public function updatePsLegalText($id, $data): PsLegalText;
 }
 

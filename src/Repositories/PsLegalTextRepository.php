@@ -35,6 +35,7 @@ class PsLegalTextRepository implements PsLegalTextContract
         $psLegalText = pluginApp(PsLegalText::class);
         $psLegalText->legalText = $data['legalText'];
         $psLegalText->success = $data['success'];
+        $psLegalText->shouldSync = $data['shouldSync'];
         $psLegalText->updated = time();
 
         $database->save($psLegalText);
@@ -58,10 +59,10 @@ class PsLegalTextRepository implements PsLegalTextContract
      * Update the status of the item
      *
      * @param int $id.
-     * @param bool $success
+     * @param array $data
      * @return PsLegalText
      */
-    public function updatePsLegalText($id, $success): PsLegalText
+    public function updatePsLegalText($id, $data): PsLegalText
     {
         /**
          * @var DataBase $database
@@ -74,7 +75,8 @@ class PsLegalTextRepository implements PsLegalTextContract
 
         $psLegalText = $psLegalText[0];
         $psLegalText->updated = time();
-        $psLegalText->success = $success;
+        $psLegalText->success = $data['success'];
+        $psLegalText->shouldSync = $data['shouldSync'];
         $database->save($psLegalText);
 
         return $psLegalText;

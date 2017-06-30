@@ -12,6 +12,7 @@ class CreatePsLegalTextTable
      */
     public function run(Migrate $migrate)
     {
+        $migrate->deleteTable(PsLegalText::class);
         $migrate->createTable(PsLegalText::class);
     }
 }
