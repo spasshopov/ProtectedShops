@@ -80,7 +80,31 @@ class ProtectedShopsController extends Controller
             $legalTextsToSync = array_unique($request->get('psLegalTexts'));
             $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
 
-            echo json_decode($legalTextsFromConfig);
+            if (!$legalTextsFromConfig) {
+                $this->psLegalTextRepository->createPsLegalText(array(
+                    'legalText' => 'TermsConditions',
+                    'success' => false,
+                    'shouldSync' => false
+                ));
+                $this->psLegalTextRepository->createPsLegalText(array(
+                    'legalText' => 'CancellationRights',
+                    'success' => false,
+                    'shouldSync' => false
+                ));
+                $this->psLegalTextRepository->createPsLegalText(array(
+                    'legalText' => 'PrivacyPolicy',
+                    'success' => false,
+                    'shouldSync' => false
+                ));
+                $this->psLegalTextRepository->createPsLegalText(array(
+                    'legalText' => 'LegalDisclosure',
+                    'success' => false,
+                    'shouldSync' => false
+                ));
+            }
+
+            $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
+            echo json_encode($legalTextsFromConfig);
 
             if ($useStaging === 'true') {
                 $this->apiUrl = $this->apiStageUrl;

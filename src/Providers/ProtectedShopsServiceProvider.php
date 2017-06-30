@@ -23,27 +23,6 @@ class ProtectedShopsServiceProvider extends ServiceProvider
     {
         $container->add(CronContainer::DAILY, ProtectedShopsCronHandler::class);
         $this->getApplication()->bind(PsLegalTextContract::class, PsLegalTextRepository::class);
-
-        $psLegalTextRepository->createPsLegalText(array(
-            'legalText' => 'TermsConditions',
-            'success' => false,
-            'shouldSync' => false
-        ));
-        $psLegalTextRepository->createPsLegalText(array(
-            'legalText' => 'CancellationRights',
-            'success' => false,
-            'shouldSync' => false
-        ));
-        $psLegalTextRepository->createPsLegalText(array(
-            'legalText' => 'PrivacyPolicy',
-            'success' => false,
-            'shouldSync' => false
-        ));
-        $psLegalTextRepository->createPsLegalText(array(
-            'legalText' => 'LegalDisclosure',
-            'success' => false,
-            'shouldSync' => false
-        ));
     }
 }
 
