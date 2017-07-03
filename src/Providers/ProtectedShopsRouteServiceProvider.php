@@ -9,6 +9,6 @@ class ProtectedShopsRouteServiceProvider extends RouteServiceProvider
 {
     public function map(Router $router)
     {
-        $router->post('/protectedshops/update', 'ProtectedShops\Controllers\ProtectedShopsController@protectedShopsUpdateDocuments');
+        $router->get('/protectedshops/legal-texts/update', 'ProtectedShops\Controllers\ProtectedShopsController@protectedShopsUpdateLegalTexts');
     }
 }

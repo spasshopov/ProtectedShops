@@ -71,7 +71,7 @@ class ProtectedShopsController extends Controller
      * @param Request $request
      * @return string
      */
-    public function protectedShopsUpdateDocuments(Twig $twig, ConfigRepository $config, Request $request):string
+    public function protectedShopsUpdateLegalTexts(Twig $twig, ConfigRepository $config, Request $request):string
     {
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
