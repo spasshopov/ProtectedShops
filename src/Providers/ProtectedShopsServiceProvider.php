@@ -17,9 +17,8 @@ class ProtectedShopsServiceProvider extends ServiceProvider
 
     /**
      * @param CronContainer $container
-     * @param PsLegalTextRepository $psLegalTextRepository
      */
-    public function boot(CronContainer $container, PsLegalTextRepository $psLegalTextRepository)
+    public function boot(CronContainer $container)
     {
         $container->add(CronContainer::DAILY, ProtectedShopsCronHandler::class);
         $this->getApplication()->bind(PsLegalTextContract::class, PsLegalTextRepository::class);
