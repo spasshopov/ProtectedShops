@@ -52,7 +52,7 @@ class ProtectedShopsLegalTextRepository implements ProtectedShopsLegalTextContra
     {
         $database = pluginApp(DataBase::class);
 
-        return $database->query(PsLegalText::class)->get();
+        return $database->query(ProtectedShopsLegalText::class)->get();
     }
 
     /**
