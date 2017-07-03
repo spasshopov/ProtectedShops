@@ -15,5 +15,5 @@
   "shortDescription"  : {"de":"ProtectedShops für viel","en":"ProtectedShops for Plenty"},
   "categories"        : ["3517", "3518"],
   "authorIcon"        : "icon_author_xs.png",
-  "runOnBuild"        : ["ProtectedShops\\Migrations\\CreatePsLegalTextTable"]
+  "runOnBuild"        : ["ProtectedShops\\Migrations\\CreateProtectedShopsLegalTextTable"]
 }

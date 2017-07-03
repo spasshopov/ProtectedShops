@@ -5,7 +5,7 @@ namespace ProtectedShops\Migrations;
 use ProtectedShops\Models\ProtectedShopsLegalText;
 use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
 
-class CreatePsLegalTextTable
+class CreateProtectedShopsLegalTextTable
 {
     /**
      * @param Migrate $migrate
