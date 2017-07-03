@@ -63,6 +63,31 @@ class ProtectedShopsController extends Controller
         $this->authHelper = $authHelper;
         $this->legalInfoRepository = $legalInfoRepository;
         $this->psLegalTextRepository = $psLegalTextRepository;
+
+        $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
+
+        if (!$legalTextsFromConfig) {
+            $this->psLegalTextRepository->createPsLegalText(array(
+                'legalText' => 'TermsConditions',
+                'success' => false,
+                'shouldSync' => false
+            ));
+            $this->psLegalTextRepository->createPsLegalText(array(
+                'legalText' => 'CancellationRights',
+                'success' => false,
+                'shouldSync' => false
+            ));
+            $this->psLegalTextRepository->createPsLegalText(array(
+                'legalText' => 'PrivacyPolicy',
+                'success' => false,
+                'shouldSync' => false
+            ));
+            $this->psLegalTextRepository->createPsLegalText(array(
+                'legalText' => 'LegalDisclosure',
+                'success' => false,
+                'shouldSync' => false
+            ));
+        }
     }
 
     /**
@@ -80,45 +105,36 @@ class ProtectedShopsController extends Controller
             $legalTextsToSync = array_unique($request->get('psLegalTexts'));
             $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
 
-            if (!$legalTextsFromConfig) {
-                $this->psLegalTextRepository->createPsLegalText(array(
-                    'legalText' => 'TermsConditions',
-                    'success' => false,
-                    'shouldSync' => false
-                ));
-                $this->psLegalTextRepository->createPsLegalText(array(
-                    'legalText' => 'CancellationRights',
-                    'success' => false,
-                    'shouldSync' => false
-                ));
-                $this->psLegalTextRepository->createPsLegalText(array(
-                    'legalText' => 'PrivacyPolicy',
-                    'success' => false,
-                    'shouldSync' => false
-                ));
-                $this->psLegalTextRepository->createPsLegalText(array(
-                    'legalText' => 'LegalDisclosure',
-                    'success' => false,
-                    'shouldSync' => false
-                ));
-            }
-
-            $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
-
             if ($useStaging === 'true') {
                 $this->apiUrl = $this->apiStageUrl;
             }
 
+            $updated = [];
             foreach ($legalTextsToSync as $legalText) {
                 $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
                 $document = json_decode($remoteResponse);
+                $success = $this->updateDocument($document, $plentyId, $legalText);
                 $data['updated'][] = [
                     'type' => $legalText,
-                    'success' => $this->updateDocument($document, $plentyId, $legalText)
+                    'success' => $success
                 ];
+
+                $updated[$legalText] = $success;
+            }
+
+            foreach ($legalTextsFromConfig as $legalTextFromConfig) {
+                $legalTextFromConfig->shouldSync = false;
+                if (in_array($legalTextFromConfig->legalText, $legalTextsToSync)) {
+                    $legalTextFromConfig->shouldSync = true;
+                    $legalTextFromConfig->success = $updated[$legalTextFromConfig->legalText];
+                    $legalTextFromConfig->updated = time();
+                }
+
+                $this->psLegalTextRepository->updatePsLegalText($legalTextFromConfig);
             }
 
             $data['success'] = true;
+            $data['legalTexts'] = $this->psLegalTextRepository->getPsLegalTexts();
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         } catch (\Exception $e) {
             $data['success'] = false;

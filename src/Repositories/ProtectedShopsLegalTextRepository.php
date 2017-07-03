@@ -58,25 +58,16 @@ class ProtectedShopsLegalTextRepository implements ProtectedShopsLegalTextContra
     /**
      * Update the status of the item
      *
-     * @param int $id.
-     * @param array $data
+     * @param updatePsLegalText $psLegalText.
+
      * @return ProtectedShopsLegalText
      */
-    public function updatePsLegalText($id, $data): ProtectedShopsLegalText
+    public function updatePsLegalText(ProtectedShopsLegalText $psLegalText): ProtectedShopsLegalText
     {
         /**
          * @var DataBase $database
          */
         $database = pluginApp(DataBase::class);
-
-        $psLegalText = $database->query(ProtectedShopsLegalText::class)
-            ->where('id', '=', $id)
-            ->get();
-
-        $psLegalText = $psLegalText[0];
-        $psLegalText->updated = time();
-        $psLegalText->success = $data['success'];
-        $psLegalText->shouldSync = $data['shouldSync'];
         $database->save($psLegalText);
 
         return $psLegalText;

@@ -28,10 +28,9 @@ interface ProtectedShopsLegalTextContract
     /**
      * Update the PsLegalText
      *
-     * @param int $id
-     * @param array $data
+     * @param ProtectedShopsLegalText $psLegalText
      * @return ProtectedShopsLegalText
      */
-    public function updatePsLegalText($id, $data): ProtectedShopsLegalText;
+    public function updatePsLegalText(ProtectedShopsLegalText $psLegalText): ProtectedShopsLegalText;
 }
 
