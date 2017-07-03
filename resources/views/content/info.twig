@@ -16,6 +16,14 @@
                         </div>
                     </div>
                 {% endfor %}
+
+                <ul>
+                {% for legalText in legalTexts %}
+                    <li>
+                        {{ legalText.legalText }}, {{ legalText.success }}, {{ legalText.shouldSync }}, {{ legalText.updated }}
+                    </li>
+                {% endfor %}
+                </ul>
             {% endif %}
         </div>
     </body>
