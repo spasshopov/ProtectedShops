@@ -122,6 +122,7 @@ class ProtectedShopsController extends Controller
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         } catch (\Exception $e) {
             $data['success'] = false;
+            echo $e->getMessage();
             $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $e->getMessage());
             return $twig->render('ProtectedShopsForPlenty::content.info', $data);
         }
