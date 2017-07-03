@@ -2,7 +2,7 @@
 
 namespace ProtectedShops\Contracts;
 
-use ProtectedShops\Models\PsLegalText;
+use ProtectedShops\Models\ProtectedShopsLegalText;
 
 /**
  * Class ToDoRepositoryContract
@@ -14,14 +14,14 @@ interface ProtectedShopsLegalTextContract
      * Add PsLegalText to the table
      *
      * @param array $data
-     * @return PsLegalText
+     * @return ProtectedShopsLegalText
      */
-    public function createPsLegalText(array $data): PsLegalText;
+    public function createPsLegalText(array $data): ProtectedShopsLegalText;
 
     /**
      * List all tasks of the To Do list
      *
-     * @return PsLegalText[]
+     * @return ProtectedShopsLegalText[]
      */
     public function getPsLegalTexts(): array;
 
@@ -30,8 +30,8 @@ interface ProtectedShopsLegalTextContract
      *
      * @param int $id
      * @param array $data
-     * @return PsLegalText
+     * @return ProtectedShopsLegalText
      */
-    public function updatePsLegalText($id, $data): PsLegalText;
+    public function updatePsLegalText($id, $data): ProtectedShopsLegalText;
 }
 

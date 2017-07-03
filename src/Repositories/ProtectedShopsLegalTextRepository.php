@@ -4,12 +4,12 @@ namespace ProtectedShops\Repositories;
 
 use Plenty\Exceptions\ValidationException;
 use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-use ProtectedShops\Contracts\PsLegalTextContract;
-use ProtectedShops\Models\PsLegalText;
+use ProtectedShops\Contracts\ProtectedShopsLegalTextContract;
+use ProtectedShops\Models\ProtectedShopsLegalText;
 use ProtectedShops\Validators\PsLegalTextValidator;
 use Plenty\Modules\Frontend\Services\AccountService;
 
-class ProtectedShopsLegalTextRepository implements PsLegalTextContract
+class ProtectedShopsLegalTextRepository implements ProtectedShopsLegalTextContract
 {
     /**
      * @var AccountService
@@ -25,14 +25,14 @@ class ProtectedShopsLegalTextRepository implements PsLegalTextContract
         $this->accountService = $accountService;
     }
 
-    public function createPsLegalText(array $data): PsLegalText
+    public function createPsLegalText(array $data): ProtectedShopsLegalText
     {
         $database = pluginApp(DataBase::class);
 
         /**
          * @var PsLegalText $psLegalText
          */
-        $psLegalText = pluginApp(PsLegalText::class);
+        $psLegalText = pluginApp(ProtectedShopsLegalText::class);
         $psLegalText->legalText = $data['legalText'];
         $psLegalText->success = $data['success'];
         $psLegalText->shouldSync = $data['shouldSync'];
@@ -46,7 +46,7 @@ class ProtectedShopsLegalTextRepository implements PsLegalTextContract
     /**
      * List all items of the To Do list
      *
-     * @return PsLegalText[]
+     * @return ProtectedShopsLegalText[]
      */
     public function getPsLegalTexts(): array
     {
@@ -60,16 +60,16 @@ class ProtectedShopsLegalTextRepository implements PsLegalTextContract
      *
      * @param int $id.
      * @param array $data
-     * @return PsLegalText
+     * @return ProtectedShopsLegalText
      */
-    public function updatePsLegalText($id, $data): PsLegalText
+    public function updatePsLegalText($id, $data): ProtectedShopsLegalText
     {
         /**
          * @var DataBase $database
          */
         $database = pluginApp(DataBase::class);
 
-        $psLegalText = $database->query(PsLegalText::class)
+        $psLegalText = $database->query(ProtectedShopsLegalText::class)
             ->where('id', '=', $id)
             ->get();
 
