@@ -13,6 +13,7 @@ class ProtectedShopsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->getApplication()->register(ProtectedShopsRouteServiceProvider::class);
+        $this->getApplication()->bind(PsLegalTextContract::class, PsLegalTextRepository::class);
     }
 
     /**
@@ -21,7 +22,6 @@ class ProtectedShopsServiceProvider extends ServiceProvider
     public function boot(CronContainer $container)
     {
         $container->add(CronContainer::DAILY, ProtectedShopsCronHandler::class);
-        $this->getApplication()->bind(PsLegalTextContract::class, PsLegalTextRepository::class);
     }
 }
 
