@@ -10,7 +10,7 @@ use Plenty\Modules\Frontend\LegalInformation\Contracts\LegalInformationRepositor
 use Plenty\Modules\Cron\Services\CronContainer;
 use Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Plugin\Log\Loggable;
-use ProtectedShops\Repositories\PsLegalTextRepository;
+use ProtectedShops\Repositories\ProtectedShopsLegalTextRepository;
 use Plenty\Plugin\Http\Request;
 
 class ProtectedShopsController extends Controller
@@ -48,7 +48,7 @@ class ProtectedShopsController extends Controller
     private $legalInfoRepository;
 
     /**
-     * @var PsLegalTextRepository
+     * @var ProtectedShopsLegalTextRepository
      */
     private $psLegalTextRepository;
 
@@ -56,9 +56,9 @@ class ProtectedShopsController extends Controller
      * ProtectedShopsController constructor.
      * @param AuthHelper $authHelper
      * @param LegalInformationRepositoryContract $legalInfoRepository
-     * @param PsLegalTextRepository $psLegalTextRepository
+     * @param ProtectedShopsLegalTextRepository $psLegalTextRepository
      */
-    public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, PsLegalTextRepository $psLegalTextRepository)
+    public function __construct(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, ProtectedShopsLegalTextRepository $psLegalTextRepository)
     {
         $this->authHelper = $authHelper;
         $this->legalInfoRepository = $legalInfoRepository;
@@ -104,7 +104,6 @@ class ProtectedShopsController extends Controller
             }
 
             $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
-            echo json_encode($legalTextsFromConfig);
 
             if ($useStaging === 'true') {
                 $this->apiUrl = $this->apiStageUrl;

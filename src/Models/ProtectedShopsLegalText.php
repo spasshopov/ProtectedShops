@@ -13,7 +13,7 @@ use Plenty\Modules\Plugin\DataBase\Contracts\Model;
  * @property boolean $success
  * @property boolean $shouldSync
  */
-class PsLegalText extends Model
+class ProtectedShopsLegalText extends Model
 {
     public $id;
     public $legalText;
@@ -26,6 +26,6 @@ class PsLegalText extends Model
      */
     public function getTableName(): string
     {
-        return 'ProtectedShopsForPlenty::PsLegalText';
+        return 'ProtectedShopsForPlenty::ProtectedShopsLegalText';
     }
 }

@@ -8,7 +8,7 @@ use ProtectedShops\Models\PsLegalText;
  * Class ToDoRepositoryContract
  * @package ToDoList\Contracts
  */
-interface PsLegalTextContract
+interface ProtectedShopsLegalTextContract
 {
     /**
      * Add PsLegalText to the table

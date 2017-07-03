@@ -9,7 +9,7 @@ use ProtectedShops\Models\PsLegalText;
 use ProtectedShops\Validators\PsLegalTextValidator;
 use Plenty\Modules\Frontend\Services\AccountService;
 
-class PsLegalTextRepository implements PsLegalTextContract
+class ProtectedShopsLegalTextRepository implements PsLegalTextContract
 {
     /**
      * @var AccountService

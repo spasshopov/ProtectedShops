@@ -2,7 +2,7 @@
 
 namespace ProtectedShops\Migrations;
 
-use ProtectedShops\Models\PsLegalText;
+use ProtectedShops\Models\ProtectedShopsLegalText;
 use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
 
 class CreatePsLegalTextTable
@@ -12,6 +12,6 @@ class CreatePsLegalTextTable
      */
     public function run(Migrate $migrate)
     {
-        $migrate->createTable(PsLegalText::class);
+        $migrate->createTable(ProtectedShopsLegalText::class);
     }
 }
