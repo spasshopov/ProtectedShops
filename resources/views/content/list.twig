@@ -1,0 +1,28 @@
+<form id="legalTextsForm" action="/protectedshops/legal-texts/update" method="GET">
+    <table>
+        <tr>
+            <th></th>
+            <th>Dokument</th>
+            <th>Letzte Synchronisation</th>
+            <th>Letzte Aktuell</th>
+        </tr>
+        {% for legalText in legalTexts %}
+            <tr>
+                <td>
+                    <input type="checkbox" name="psLegalTexts[]" value="{{ legalText.legalText }}" {% if legalText.shouldSync %}checked="checked"{% endif %}>
+                </td>
+                <td>
+                    {{ legalText.updated }}
+                </td>
+                <td>
+                    {{ legalText.success }}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td><input type="submit" class="btn btn-primary btn-large btn-block" value="Rechstecte jetzt aktualisieren" /></td>
+        </tr>
+    </table>
+</form>

@@ -1,36 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html dir="ltr" lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <head>
+        <title>Protected Shops – Konfiguration</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    </head>
+<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" class=" gx-compatibility   pace-done">
+<link rel="stylesheet" href="ps/compatibility.min.css">
+<link rel="stylesheet" href="ps/compatibility-vendor.min.css">
+<link rel="stylesheet" href="ps/admin_info_box.min.css">
+<div class="" style="width: 100%; background-color: rgb(44, 44, 44); display: block;" align="center">
+    <div class="main-page-content content_width" style="background-color: white; margin-bottom: 0px; min-height: 863px;" align="left">
+        <table border="0" width="100%" style="border-spacing: 0px; min-height: 863px;">
+            <tbody><tr>
+                <td class="boxCenter" width="100%" valign="top"><div class="boxCenterWrapper"><div class="message_stack_container hidden" style="display: block;">
+                        </div>
+                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td>
+                                    <div id="container">
+                                        <style>
+                                            div.psinfo { margin-bottom: 3em; }
+                                            div.psinfo div.row2 div.head { font-size: 1.8em; font-weight: bold; }
+                                            div.psinfo div.row2 img { margin-top: .6em; }
+                                            div.psinfo div.row2text { width: calc(100% - 36px); }
+                                            div.psinfo div.row3 div.borderbox { border: 1px solid #ccc; padding: 1em; min-height: 26em; }
+                                            div.psinfo div.row3 div.gridcell { height: 100%; }
+                                            div.psinfo div.psul {
+                                                width: 33%;
+                                                display: inline-block;
+                                                vertical-align: top;
+                                            }
+                                            div.psinfo div.psli {
+                                                background-image: url("ps/ok.png");
+                                                background-repeat: no-repeat;
+                                                padding-left: 30px;
+                                                min-height: 4em;
+                                            }
+                                        </style>
 
-<form id="legalTextsForm" action="/protectedshops/legal-texts/update" method="GET">
-    <table>
-        <tr>
-            <th></th>
-            <th>Dokument</th>
-            <th>Letzte Synchronisation</th>
-            <th>Letzte Aktuell</th>
-        </tr>
-        {% for legalText in legalTexts %}
-            <tr>
-                <td>
-                    <input type="checkbox" name="psLegalTexts[]" value="{{ legalText.legalText }}" {% if legalText.shouldSync %}checked="checked"{% endif %}>
-                </td>
-                <td>
-                    {{ legalText.updated }}
-                </td>
-                <td>
-                    {{ legalText.success }}
+                                        <div class="main">
+                                            <table style="margin-bottom: 5px; display: none;" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody><tr class="dataTableHeadingRow gx-container">
+                                                    <td class="dataTableHeadingContentText" style="width:1%; padding-right:20px; white-space: nowrap">
+                                                        Information
+                                                    </td>
+                                                </tr>
+                                                <tr class="dataTableHeadingRow gx-container">
+                                                    <td class="dataTableHeadingContentText" style="width:1%; padding-right:20px; white-space: nowrap">
+                                                        <a href="https://www.gambio-shop.de/shop1/admin/admin.php?do=ProtectedShopsModuleCenterModule/Configuration">Konfiguration</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="gx-container">
+                                            <div class="psinfo">
+                                                <div class="grid">
+                                                    <div class="span3" style="text-align: center; min-width: 300px;">
+                                                        <img src="ps/logo.png">
+                                                    </div>
+                                                    <div class="span6">
+                                                        Als offizieller Partner von Gambio bietet Ihnen Protected Shops die Möglichkeit innerhalb 15 Minuten rechtssicher online zu verkaufen. Mit Haftungsübernahme und automatischen Updates bei Gesetzesänderungen.
+                                                    </div>
+                                                    <div class="span3" style="text-align: center;">
+                                                        <a href="http://www.protectedshops.de/partner/gambio?sPartner=Gambio" target="_blank"><img src="ps/Button.png" alt="Jetzt absichern!"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="grid row2">
+                                                    <div class="span3">
+                                                        <img class="pull-left" src="ps/schutzpaket_icon.png">
+                                                        <div class="pull-right head row2text">Individuelle Rechtstexte</div>
+                                                        <div class="pull-right row2text">AGB, Widerrufsbelehrung, Datenschutzerklärung, Impressum, Bezahlarten,
+                                                            Ver&shy;sand&shy;kosten&shy;er&shy;klärung erstellt durch Rechts&shy;text&shy;kon&shy;figurator.</div>
+                                                    </div>
+                                                    <div class="span3">
+                                                        <img class="pull-left" src="ps/haftungsuebernahme_icon.png">
+                                                        <div class="pull-right head row2text">Haftungs&shy;über&shy;nahme</div>
+                                                        <div class="pull-right row2text">Haftungs&shy;über&shy;nahme&shy;garan&shy;tie für die erstellten Rechts&shy;texte von Protected Shops - Schutz vor Abmahnungen und Kosten.</div>
+                                                    </div>
+                                                    <div class="span3">
+                                                        <img class="pull-left" src="ps/update_icon.png">
+                                                        <div class="pull-right head row2text">Update Flatrate</div>
+                                                        <div class="pull-right row2text"> Zeitnahe Aktualisierung der Rechtstexte bei neuen rechtlichen Anforderungen. Kostenfrei während der gesamten Laufzeit.</div>
+                                                    </div>
+                                                    <div class="span3">
+                                                        <img class="pull-left" src="ps/regenschirm_icon.png">
+                                                        <div class="pull-right head row2text">In 15 Minuten geschützt</div>
+                                                        <div class="pull-right row2text"> Fragebogen für individuelle Geschäftsmodelle und Situationen generiert SOFORT rechtssichere AGB, Impressum, Widerrufsbelehrung, etc.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row3 grid" style="">
+                                                    <div class="span9 gridcell" style="">
+                                                        <div class="borderbox">
+                                                            <div style="font-size: 2.5em; margin-bottom: 1em; text-align: center;">So einfach funktioniert die rechtliche Absicherung:</div>
+                                                            <div class="psul">
+                                                                <div class="psli">Geeignetes Schutzpaket auswählen bei www.protectedshops.de.</div>
+                                                                <div class="psli">Dort den Fragebogen im Rechtstextkonfigurator durchlaufen.</div>
+                                                                <div class="psli">Unter dem Menüpunkt „Schnittstellen“ den Bereich „Übersicht Shop-IDs“ auswählen.</div>
+                                                                <div class="psli">Entsprechende ShopID kopieren.</div>
+                                                            </div>
+                                                            <div class="psul">
+                                                                <div class="psli">Auf dieser Seite unten im Feld „ShopId“ die ShopID einfügen.</div>
+                                                                <div class="psli">„Format und Aktualisierungsintervall“ einstellen und „Einstellungen speichern“.</div>
+                                                                <div class="psli">„Dokumente den Zielseiten” zuordnen und speichern.</div>
+                                                            </div>
+                                                            <div class="psul">
+                                                                <div class="psli">
+                                                                    Innerhalb weniger Minuten sind Sie nun vor Abmahnungen Ihrer Rechtstexte geschützt!<br>
+                                                                    <img src="ps/feature2-image-1.png">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span3 gridcell" style="min-width: 26em;">
+                                                        <div class="borderbox" style="text-align: center;">
+                                                            <span style="font-size: 2em; line-height: 3;">Für plentymarkets-Kunden</span><br>
+                                                            <span style="font-size: 4em; line-height: 1;">2 MONATE</span><br>
+                                                            <span style="font-size: 6em; line-height: 1;">GRATIS</span><br>
+                                                            <a href="https://www.protectedshops.de/partner/gambio?sPartner=Gambio" target="_blank"><img style="margin: 2em auto;" src="ps/Button.png" alt="Jetzt absichern!"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </td>
             </tr>
-        {% endfor %}
-        <tr>
-            <td></td>
-            <td></td>
-            <td><input type="submit" class="btn btn-primary btn-large btn-block" value="Rechstecte jetzt aktualisieren" /></td>
-        </tr>
-    </table>
-</form>
+            <tr>
+                <td id="legal_texts_table_holder">
 
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <script>
-    $('#legalTextsForm').submit(function(event) {
-        event.preventDefault();
-        console.log(event);
-    });
+    var xmlhttp;
+    var url = "/protectedshops/legal-texts";
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            var tableHolder = document.getElementById("legal_texts_table_holder");
+            tableHolder.innerHTML = xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
 </script>
+</body>
+</html>
