@@ -132,40 +132,23 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <table>
-                                <form action="/protectedshops/legal-texts/update" method="GET">
-                                    <tr>
-                                        <th></th>
-                                        <th>Dokument</th>
-                                        <th>Letzte Synchronisation</th>
-                                        <th>Letzte Aktuell</th>
-                                    </tr>
+                        <td id="legal_texts_table_holder">
 
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" name="psLegalTexts[]" value="TermsConditions">
-                                        </td>
-                                        <td>
-                                           dd
-                                        </td>
-                                        <td>
-                                            dd
-                                        </td>
-                                    </tr>
-
-                                    <input type="checkbox" name="psLegalTexts[]" value="CancellationRights">
-                                    <input type="checkbox" name="psLegalTexts[]" value="PrivacyPolicy">
-                                    <input type="checkbox" name="psLegalTexts[]" value="LegalDisclosure">
-
-                                    <input type="submit" class="btn btn-primary btn-large btn-block" value="Update Now" />
-                                </form>
-                            </table>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: '/protectedshops/legal-texts',
+                    method: 'GET'
+                }).done(function(response) {
+                    $('#legal_texts_table_holder').html(response);
+                });
+            });
+        </script>
     </body>
 </html>
