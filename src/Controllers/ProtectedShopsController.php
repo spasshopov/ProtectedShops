@@ -92,6 +92,16 @@ class ProtectedShopsController extends Controller
 
     /**
      * @param Twig $twig
+     * @return mixed
+     */
+    public function listLegalTexts(Twig $twig):string
+    {
+        $data['legalTexts'] = $this->psLegalTextRepository->getPsLegalTexts();
+        return $twig->render('ProtectedShopsForPlenty::content.info', $data);
+    }
+
+    /**
+     * @param Twig $twig
      * @param ConfigRepository $config
      * @param Request $request
      * @return string

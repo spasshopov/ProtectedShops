@@ -1,30 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Protected Shops Update Documents</title>
-        <link href=" href="{{ plugin_path('ProtectedShopsForPlenty') }}/css/flat-ui.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="row">
-            {% if success %}
-                {% for docs in updated %}
-                    <div class="col-xs-3">
-                        <div class="tile">
-                            <h3 class="tile-title">{{ docs.type }}</h3>
-                            <p>{% if docs.success  %}Succesfully updated{% else %}Not updated{% endif %}</p>
-                        </div>
-                    </div>
-                {% endfor %}
 
-                <ul>
-                {% for legalText in legalTexts %}
-                    <li>
-                        {{ legalText.legalText }}, {{ legalText.success }}, {{ legalText.shouldSync }}, {{ legalText.updated }}
-                    </li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-    </body>
-</html>
+<table>
+    <form action="/protectedshops/legal-texts/update" method="GET">
+        <tr>
+            <th></th>
+            <th>Dokument</th>
+            <th>Letzte Synchronisation</th>
+            <th>Letzte Aktuell</th>
+        </tr>
+        {% for legalText in legalTexts %}
+            <tr>
+                <td>
+                    <input type="checkbox" name="psLegalTexts[]" value="{{ legalText.legalText }}" {% if legalText.shouldSync %}checked="checked"{% endif %}>
+                </td>
+                <td>
+                    {{ legalText.updated }}
+                </td>
+                <td>
+                    {{ legalText.success }}
+                </td>
+            </tr>
+        {% endfor %}
+
+        <input type="submit" class="btn btn-primary btn-large btn-block" value="Rechstecte jetzt aktualisieren" />
+    </form>
+</table>

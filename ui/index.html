@@ -131,28 +131,40 @@
                         </div>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <form action="/protectedshops/legal-texts/update" method="GET">
+                                    <tr>
+                                        <th></th>
+                                        <th>Dokument</th>
+                                        <th>Letzte Synchronisation</th>
+                                        <th>Letzte Aktuell</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="psLegalTexts[]" value="TermsConditions">
+                                        </td>
+                                        <td>
+                                           dd
+                                        </td>
+                                        <td>
+                                            dd
+                                        </td>
+                                    </tr>
+
+                                    <input type="checkbox" name="psLegalTexts[]" value="CancellationRights">
+                                    <input type="checkbox" name="psLegalTexts[]" value="PrivacyPolicy">
+                                    <input type="checkbox" name="psLegalTexts[]" value="LegalDisclosure">
+
+                                    <input type="submit" class="btn btn-primary btn-large btn-block" value="Update Now" />
+                                </form>
+                            </table>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
-
-                <div class="row">
-                    <div class="col-xs-3">
-                        <div class="tile">
-                            <img src="../images/pencils.svg" alt="Sync legal texts" class="tile-image big-illustration">
-                            <h3 class="tile-title">Update your legal texts now</h3>
-                            <p>All selected legal texts will be updated</p>
-                            <form action="/protectedshops/legal-texts/update" method="GET">
-                                <label>Legal texts</label>
-                                <input type="checkbox" name="psLegalTexts[]" value="TermsConditions">
-                                <input type="checkbox" name="psLegalTexts[]" value="CancellationRights">
-                                <input type="checkbox" name="psLegalTexts[]" value="PrivacyPolicy">
-                                <input type="checkbox" name="psLegalTexts[]" value="LegalDisclosure">
-
-                                <input type="submit" class="btn btn-primary btn-large btn-block" value="Update Now" />
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </body>
