@@ -141,14 +141,17 @@
             </div>
         </div>
         <script>
-            $(document).ready(function () {
-                $.ajax({
-                    url: '/protectedshops/legal-texts',
-                    method: 'GET'
-                }).done(function(response) {
-                    $('#legal_texts_table_holder').html(response);
-                });
-            });
+                var xmlhttp;
+                var url = "/protectedshops/legal-texts";
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function(){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        var tableHolder = document.getElementById("legal_texts_table_holder");
+                        tableHolder.innerHTML = xmlhttp.responseText;
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
         </script>
     </body>
 </html>
