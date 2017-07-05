@@ -9,7 +9,7 @@
         {% for legalText in legalTexts %}
             <tr>
                 <td>
-                    <input type="checkbox" name="psLegalTexts[]" value="{{ legalText.legalText }}" {% if legalText.shouldSync %}checked="checked"{% endif %}>
+                    <input type="checkbox" name="psLegalTexts[{{ loop.index -1 }}]" value="{{ legalText.legalText }}" {% if legalText.shouldSync %}checked="checked"{% endif %}>
                 </td>
                 <td>
                     {{ legalText.legalText }}
