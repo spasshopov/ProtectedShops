@@ -151,7 +151,12 @@
                         tableHolder.innerHTML = xmlhttp.responseText;
                         $('#legalTextsForm').submit(function(event) {
                             event.preventDefault();
-                            console.log(event);
+                            var data = $('#legalTextsForm').serializeArray().reduce(function(obj, item) {
+                                obj[item.name] = item.value;
+                                return obj;
+                            }, {});
+
+                            console.log(data);
                         });
                     }
                 }
