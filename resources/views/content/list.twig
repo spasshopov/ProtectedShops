@@ -29,3 +29,22 @@
         </tr>
     </table>
 </form>
+<script>
+    $('#legalTextsForm').submit(function(event) {
+        event.preventDefault();
+        var url= "/protectedshops/legal-texts/update?protected=protected";
+        xmlhttp = new XMLHttpRequest();
+        var urlWithData = $('#legalTextsForm').serializeArray().reduce(function(obj, item) {
+            url += "&psLegalTexts[]=" + item.value;
+            return url;
+        }, {});
+
+        $.ajax({
+            method: 'GET',
+            url: urlWithData
+        }).done(function(res) {
+            var tableHolder = document.getElementById("legal_texts_table_holder");
+            tableHolder.innerHTML = res;
+        });
+    });
+</script>
