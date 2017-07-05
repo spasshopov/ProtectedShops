@@ -11,7 +11,8 @@
         <div class="" style="width: 100%; background-color: rgb(44, 44, 44); display: block;" align="center">
             <div class="main-page-content content_width" style="background-color: white; margin-bottom: 0px; min-height: 863px;" align="left">
                 <table border="0" width="100%" style="border-spacing: 0px; min-height: 863px;">
-                    <tbody><tr>
+                    <tbody>
+                    <tr>
                         <td class="boxCenter" width="100%" valign="top"><div class="boxCenterWrapper"><div class="message_stack_container hidden" style="display: block;">
                         </div>
                             <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -118,7 +119,7 @@
                                                                 <span style="font-size: 2em; line-height: 3;">Für plentymarkets-Kunden</span><br>
                                                                 <span style="font-size: 4em; line-height: 1;">2 MONATE</span><br>
                                                                 <span style="font-size: 6em; line-height: 1;">GRATIS</span><br>
-                                                                <a href="https://www.protectedshops.de/partner/plentymarkets-landing?sPartner=Gambio" target="_blank"><img style="margin: 2em auto;" src="ps/Button.png" alt="Jetzt absichern!"></a>
+                                                                <a href="https://www.protectedshops.de/partner/plentymarkets-landing?sPartner=plentymarketso" target="_blank"><img style="margin: 2em auto;" src="ps/Button.png" alt="Jetzt absichern!"></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -127,30 +128,122 @@
                                         </div>
                                     </td>
                                 </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="grid">
-                                <div class="span8">
-                                    <div class="pull-right head row2text">Dokumentenauswahl</div>
-                                    <div class="psli">Bitte geben Sie zuerst im installierten Plugin unter dem Menüpunkt "Konfiguration" die ProtectedShops ShopID und die plentymarkets ID ein. Wählen nun hier die zu synchronisierenden Dokumnete ause:</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="grid">
+                                    <div span="span3">
+                                        <div class="pull-left head row2text"><h2>Dokumentenauswahl</h2></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="legal_texts_table_holder">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="grid">
+                                    <div class="span8">
+                                        <div class="psli">Bitte geben Sie zuerst im installierten Plugin unter dem Menüpunkt "Konfiguration" die ProtectedShops ShopID und die plentymarkets ID ein. Wählen nun hier die zu synchronisierenden Dokumnete ause:</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="grid" id="legal_texts_table_holder">
+                                <style>
+                                    #legalTextsForm table {
+                                        border-collapse: collapse;
+                                        width: 40%;
+                                    }
 
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                                    #legalTextsForm  th, td {
+                                        text-align: left;
+                                        padding: 8px;
+                                    }
+
+                                    #legalTextsForm  tr:nth-child(even){background-color: #f2f2f2}
+
+                                    #textsSubmitButton {
+                                        background: url('ps/button_rechtstexte-jetzt-aktualisieren.png') no-repeat;
+                                        width: 344px;
+                                        height: 44px;
+                                        border-radius: 9px;
+                                    }
+                                </style>
+                                <form id="legalTextsForm" action="/protectedshops/legal-texts/update" method="GET">
+                                    <table>
+                                        <tbody><tr>
+                                            <th></th>
+                                            <th>Dokument</th>
+                                            <th>Letzte Synchronisation</th>
+                                            <th>Letzte Aktuell</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="psLegalTexts[]" value="TermsConditions">
+                                            </td>
+                                            <td>
+                                                TermsConditions
+                                            </td>
+                                            <td>
+                                                1499256085
+                                            </td>
+                                            <td>
+                                                1
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="psLegalTexts[]" value="CancellationRights" checked="checked">
+                                            </td>
+                                            <td>
+                                                CancellationRights
+                                            </td>
+                                            <td>
+                                                1499256091
+                                            </td>
+                                            <td>
+                                                1
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="psLegalTexts[]" value="PrivacyPolicy" checked="checked">
+                                            </td>
+                                            <td>
+                                                PrivacyPolicy
+                                            </td>
+                                            <td>
+                                                1499256091
+                                            </td>
+                                            <td>
+                                                1
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="psLegalTexts[]" value="LegalDisclosure">
+                                            </td>
+                                            <td>
+                                                LegalDisclosure
+                                            </td>
+                                            <td>
+                                                1499256085
+                                            </td>
+                                            <td>
+                                                1
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="submit" id="textsSubmitButton"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
         <script>
             function onLegalSubmit() {
                 $('#legalTextsForm').submit(function(event) {

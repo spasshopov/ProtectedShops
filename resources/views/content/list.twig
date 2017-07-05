@@ -1,3 +1,23 @@
+<style>
+    #legalTextsForm table {
+        border-collapse: collapse;
+        width: 40%;
+    }
+
+    #legalTextsForm  th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    #legalTextsForm  tr:nth-child(even){background-color: #f2f2f2}
+
+    #legalTextsForm input[type="submit"] {
+        font-size: 22px;
+        color: white;
+        background-color: #f29c41;
+        border-radius: 2px;
+    }
+</style>
 <form id="legalTextsForm" action="/protectedshops/legal-texts/update" method="GET">
     <table>
         <tr>
@@ -15,7 +35,7 @@
                     {{ legalText.legalText }}
                 </td>
                 <td>
-                    {{ legalText.updated }}
+                    {{ legalText.updated|date("m/d/Y") }}
                 </td>
                 <td>
                     {{ legalText.success }}
