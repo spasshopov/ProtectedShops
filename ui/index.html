@@ -162,7 +162,7 @@
                                 data: data
                             }).done(function(res) {
                                 var tableHolder = document.getElementById("legal_texts_table_holder");
-                                console.log(res);
+                                tableHolder.innerHTML = res;
                             });
                         });
                     }
