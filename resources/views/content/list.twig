@@ -12,6 +12,9 @@
                     <input type="checkbox" name="psLegalTexts[]" value="{{ legalText.legalText }}" {% if legalText.shouldSync %}checked="checked"{% endif %}>
                 </td>
                 <td>
+                    {{ legalText.legalText }}
+                </td>
+                <td>
                     {{ legalText.updated }}
                 </td>
                 <td>
