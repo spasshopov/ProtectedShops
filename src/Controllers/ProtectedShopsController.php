@@ -145,12 +145,12 @@ class ProtectedShopsController extends Controller
 
             $data['success'] = true;
             $data['legalTexts'] = $this->psLegalTextRepository->getPsLegalTexts();
-            return $twig->render('ProtectedShopsForPlenty::content.info', $data);
+            return $twig->render('ProtectedShopsForPlenty::content.list', $data);
         } catch (\Exception $e) {
             $data['success'] = false;
             echo $e->getMessage();
             $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $e->getMessage());
-            return $twig->render('ProtectedShopsForPlenty::content.info', $data);
+            return $twig->render('ProtectedShopsForPlenty::content.list', $data);
         }
     }
 

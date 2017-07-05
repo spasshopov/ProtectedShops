@@ -149,6 +149,10 @@
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
                         var tableHolder = document.getElementById("legal_texts_table_holder");
                         tableHolder.innerHTML = xmlhttp.responseText;
+                        $('#legalTextsForm').submit(function(event) {
+                            event.preventDefault();
+                            console.log(event);
+                        });
                     }
                 }
                 xmlhttp.open("GET", url, true);
