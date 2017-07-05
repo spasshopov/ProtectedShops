@@ -143,7 +143,7 @@
         </div>
         <script>
                 var xmlhttp;
-                var url = "/protectedshops/legal-texts";
+                var url = "/protectedshops/legal-texts?protected=protected";
                 xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function(){
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
@@ -151,15 +151,14 @@
                         tableHolder.innerHTML = xmlhttp.responseText;
                         $('#legalTextsForm').submit(function(event) {
                             event.preventDefault();
-                            var data = $('#legalTextsForm').serializeArray().reduce(function(obj, item) {
-                                obj[item.name] = item.value;
-                                return obj;
+                            var urlWithData = $('#legalTextsForm').serializeArray().reduce(function(obj, item) {
+                                url += "&" + item.value;
+                                return url;
                             }, {});
 
                             $.ajax({
                                 method: 'GET',
-                                url: url,
-                                data: data
+                                url: urlWithData
                             }).done(function(res) {
                                 var tableHolder = document.getElementById("legal_texts_table_holder");
                                 tableHolder.innerHTML = res;
