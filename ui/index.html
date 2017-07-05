@@ -156,7 +156,14 @@
                                 return obj;
                             }, {});
 
-                            console.log(data);
+                            $.ajax({
+                                method: 'GET',
+                                url: url,
+                                data: data
+                            }).done(function(res) {
+                                var tableHolder = document.getElementById("legal_texts_table_holder");
+                                console.log(res);
+                            });
                         });
                     }
                 }
