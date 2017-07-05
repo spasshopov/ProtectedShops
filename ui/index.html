@@ -152,7 +152,7 @@
                         $('#legalTextsForm').submit(function(event) {
                             event.preventDefault();
                             var urlWithData = $('#legalTextsForm').serializeArray().reduce(function(obj, item) {
-                                url += "&" + item.value;
+                                url += "&psLegalTexts[]=" + item.value;
                                 return url;
                             }, {});
 
