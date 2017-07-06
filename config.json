@@ -2,36 +2,15 @@
   {
     "tab"       : "ProtectedShops",
     "key"       : "shopId",
-    "label"     : "Shop ID from protectedShops",
+    "label"     : "ShopID von protectedshops.de (Kundenlogin -> Schnittstellen)",
     "type"      : "text",
     "default"   : "ProtectedShop ShopID"
   },
   {
     "tab"       : "ProtectedShops",
     "key"       : "plentyId",
-    "label"     : "Your unique plenty ID",
+    "label"     : "plentymarkets ID",
     "type"      : "text",
     "default"   : "Plenty ID"
-  },
-  {
-    "tab"           : "ProtectedShops",
-    "key"           : "legalTexts",
-    "label"         : "Select the documents you want to be updated",
-    "type"          : "multi_select",
-    "default"       : "false",
-    "possibleValues":
-    {
-      "TermsConditions"     : "TermsConditions",
-      "CancellationRights"  : "CancellationRights",
-      "PrivacyPolicy"       : "PrivacyPolicy",
-      "LegalDisclosure"     : "LegalDisclosure"
-    }
-  },
-  {
-    "tab"       : "ProtectedShops",
-    "key"       : "useStaging",
-    "label"     : "Use ProtectedShops staging api",
-    "type"      : "checkbox",
-    "default"   : "false"
   }
 ]

@@ -7,15 +7,11 @@ use Plenty\Plugin\ConfigRepository;
 use Plenty\Modules\Frontend\LegalInformation\Contracts\LegalInformationRepositoryContract;
 use Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Plugin\Log\Loggable;
+use ProtectedShops\Repositories\ProtectedShopsLegalTextRepository;
 
 class ProtectedShopsCronHandler extends CronHandler
 {
     use Loggable;
-
-    /**
-     * @var string
-     */
-    private $apiStageUrl = 'api.stage.protectedshops.de';
 
     /**
      * @var string
@@ -35,25 +31,28 @@ class ProtectedShopsCronHandler extends CronHandler
     /**
      * @param ConfigRepository $config
      * @param LegalInformationRepositoryContract $legalInfoRepository
+     * @param ProtectedShopsLegalTextRepository $legalTextRepository
      */
-    public function handle(ConfigRepository $config, LegalInformationRepositoryContract $legalInfoRepository, AuthHelper $authHelper):void
+    public function handle(ConfigRepository $config, LegalInformationRepositoryContract $legalInfoRepository, AuthHelper $authHelper, ProtectedShopsLegalTextRepository $legalTextRepository):void
     {
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-            $useStaging = $config->get('ProtectedShopsForPlenty.useStaging');
-            $legalTextsToSync = explode(", ", $config->get('ProtectedShopsForPlenty.legalTexts'));
+            $legalTextsFromConfig = $legalTextRepository->getPsLegalTexts();
 
-            if ($useStaging === 'true') {
-                $this->apiUrl = $this->apiStageUrl;
-            }
-
-            foreach ($legalTextsToSync as $legalText) {
-                $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
-                $document = json_decode($remoteResponse);
-                if (!$this->updateDocument($authHelper, $legalInfoRepository, $document, $plentyId, $legalText)) {
-                    $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $legalText . ' could not be updated');
+            foreach ($legalTextsFromConfig as $legalText) {
+                if (!$legalText->shouldSync) {
+                    continue;
                 }
+                $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText->legalText]);
+                $document = json_decode($remoteResponse);
+                if (!$this->updateDocument($authHelper, $legalInfoRepository, $document, $plentyId, $legalText->legalText)) {
+                    $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $legalText . ' could not be updated');
+                    $legalText->success = false;
+                } else {
+                    $legalText->success = true;
+                }
+                $legalText->updated = time();
             }
         } catch (\Exception $e) {
             $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $e->getMessage());

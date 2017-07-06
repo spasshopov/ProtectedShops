@@ -20,11 +20,6 @@ class ProtectedShopsController extends Controller
     /**
      * @var string
      */
-    private $apiStageUrl = 'api.stage.protectedshops.de';
-
-    /**
-     * @var string
-     */
     private $apiUrl = 'api.protectedshops.de';
 
     /**
@@ -111,13 +106,8 @@ class ProtectedShopsController extends Controller
         try {
             $shopId = $config->get('ProtectedShopsForPlenty.shopId');
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
-            $useStaging = $config->get('ProtectedShopsForPlenty.useStaging');
             $legalTextsToSync = array_unique($request->get('psLegalTexts'));
             $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
-
-            if ($useStaging === 'true') {
-                $this->apiUrl = $this->apiStageUrl;
-            }
 
             $updated = [];
             foreach ($legalTextsToSync as $legalText) {
