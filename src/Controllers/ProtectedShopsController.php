@@ -92,6 +92,7 @@ class ProtectedShopsController extends Controller
     public function listLegalTexts(Twig $twig):string
     {
         $data['legalTexts'] = $this->psLegalTextRepository->getPsLegalTexts();
+        $data['legalTextsToGerman'] = $this->docMap;
         return $twig->render('ProtectedShopsForPlenty::content.list', $data);
     }
 
@@ -108,6 +109,7 @@ class ProtectedShopsController extends Controller
             $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
             $legalTextsToSync = array_unique($request->get('psLegalTexts'));
             $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
+            $data['legalTextsToGerman'] = $this->docMap;
 
             $updated = [];
             foreach ($legalTextsToSync as $legalText) {

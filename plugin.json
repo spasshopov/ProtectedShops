@@ -13,7 +13,7 @@
   "keywords"          : ["plugins", "legal texts"],
   "license"           : "AGPL-3.0",
   "pluginIcon"        : "icon_plugin_xs.png",
-  "shortDescription"  : {"de":"ProtectedShops für viel","en":"ProtectedShops for Plenty"},
+  "shortDescription"  : {"de":"Plugin zur Synchronisation der Rechtstexte von Protected Shops","en":"ProtectedShops for Plenty"},
   "categories"        : ["3517", "3518"],
   "authorIcon"        : "icon_author_xs.png",
   "runOnBuild"        : ["ProtectedShops\\Migrations\\CreateProtectedShopsLegalTextTable"]
