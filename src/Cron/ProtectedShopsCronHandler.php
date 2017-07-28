@@ -44,9 +44,14 @@ class ProtectedShopsCronHandler extends CronHandler
                 if (!$legalText->shouldSync) {
                     continue;
                 }
-                $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText->legalText]);
-                $document = json_decode($remoteResponse);
-                if (!$this->updateDocument($authHelper, $legalInfoRepository, $document, $plentyId, $legalText->legalText)) {
+                $remoteResponseHtml = $this->getDocument($shopId, $this->docMap[$legalText->legalText], 'html');
+                $remoteResponseText = $this->getDocument($shopId, $this->docMap[$legalText->legalText], 'text');
+                $document = json_decode($remoteResponseHtml);
+                $successHtml = $this->updateDocument($authHelper, $legalInfoRepository, $document, $plentyId, $legalText->legalText, 'htmlText');
+                $document = json_decode($remoteResponseText);
+                $successText = $this->updateDocument($authHelper, $legalInfoRepository, $document, $plentyId, $legalText->legalText, 'plainText');
+
+                if (!($successHtml && $successText)) {
                     $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $legalText . ' could not be updated');
                     $legalText->success = false;
                 } else {
@@ -65,18 +70,19 @@ class ProtectedShopsCronHandler extends CronHandler
      * @param $document
      * @param $plentyId
      * @param $legalText
+     * @param $formatType
      * @return bool
      */
-    function updateDocument(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, $document, $plentyId, $legalText):bool
+    function updateDocument(AuthHelper $authHelper, LegalInformationRepositoryContract $legalInfoRepository, $document, $plentyId, $legalText, $formatType):bool
     {
         $logger = $this->getLogger(__FUNCTION__);
         $success = false;
         $authHelper->processUnguarded(
-            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success, $logger) {
+            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success, $logger, $formatType) {
                 try {
                     foreach ($document as $key => $value) {
                         if ('content' === $key) {
-                            $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
+                            $legalInfoRepository->save(array($formatType => $value), $plentyId, 'de', $legalText);
                             $success = true;
                             break;
                         }

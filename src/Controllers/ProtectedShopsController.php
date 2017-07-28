@@ -153,6 +153,8 @@ class ProtectedShopsController extends Controller
     /**
      * @param $document
      * @param $plentyId
+     * @param $legalText
+     * @param $formatType
      * @return bool
      */
     private function updateDocument($document, $plentyId, $legalText, $formatType):bool
