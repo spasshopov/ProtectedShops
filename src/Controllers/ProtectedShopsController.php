@@ -113,15 +113,19 @@ class ProtectedShopsController extends Controller
 
             $updated = [];
             foreach ($legalTextsToSync as $legalText) {
-                $remoteResponse = $this->getDocument($shopId, $this->docMap[$legalText]);
-                $document = json_decode($remoteResponse);
-                $success = $this->updateDocument($document, $plentyId, $legalText);
+                $remoteResponseHtml = $this->getDocument($shopId, $this->docMap[$legalText], 'html');
+                $remoteResponseText = $this->getDocument($shopId, $this->docMap[$legalText], 'text');
+                $document = json_decode($remoteResponseHtml);
+                $successHtml = $this->updateDocument($document, $plentyId, $legalText, 'htmlText');
+                $document = json_decode($remoteResponseText);
+                $successText = $this->updateDocument($document, $plentyId, $legalText, 'plainText');
+
                 $data['updated'][] = [
                     'type' => $legalText,
-                    'success' => $success
+                    'success' => $successHtml && $successText
                 ];
 
-                $updated[$legalText] = $success;
+                $updated[$legalText] = $successHtml && $successText;
             }
 
             foreach ($legalTextsFromConfig as $legalTextFromConfig) {
@@ -149,19 +153,21 @@ class ProtectedShopsController extends Controller
     /**
      * @param $document
      * @param $plentyId
+     * @param $legalText
+     * @param $formatType
      * @return bool
      */
-    private function updateDocument($document, $plentyId, $legalText):bool
+    private function updateDocument($document, $plentyId, $legalText, $formatType):bool
     {
         $legalInfoRepository = $this->legalInfoRepository;
         $logger = $this->getLogger(__FUNCTION__);
         $success = false;
         $this->authHelper->processUnguarded(
-            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success, $logger) {
+            function () use ($document, $legalInfoRepository, $plentyId, $legalText, &$success, $logger, $formatType) {
                 try {
                     foreach ($document as $key => $value) {
                         if ('content' === $key) {
-                            $legalInfoRepository->save(array('htmlText' => $value), $plentyId, 'de', $legalText);
+                            $legalInfoRepository->save(array($formatType => $value), $plentyId, 'de', $legalText);
                             $success = true;
                             break;
                         }
@@ -178,11 +184,13 @@ class ProtectedShopsController extends Controller
     /**
      * @param $shopId
      * @param $documentType
+     * @param $format
+     *
      * @return string
      */
-    private function getDocument($shopId, $documentType):string
+    private function getDocument($shopId, $documentType, $format):string
     {
-        $apiFunction = 'documents/' . $documentType . '/contentformat/html';
+        $apiFunction = 'documents/' . $documentType . '/contentformat/' . $format;
         $response = $this->apiRequest($shopId, $apiFunction);
 
         return $response;
