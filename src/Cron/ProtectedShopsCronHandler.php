@@ -97,13 +97,15 @@ class ProtectedShopsCronHandler extends CronHandler
     }
 
     /**
-     * @param $shopId
-     * @param $documentType
+     * @param string $shopId
+     * @param string $documentType
+     * @param string $docFormat
+     *
      * @return string
      */
-    private function getDocument($shopId, $documentType):string
+    private function getDocument($shopId, $documentType, $docFormat):string
     {
-        $apiFunction = 'documents/' . $documentType . '/contentformat/html';
+        $apiFunction = 'documents/' . $documentType . '/contentformat/' . $docFormat;
         $response = $this->apiRequest($shopId, $apiFunction);
 
         return $response;
