@@ -36,8 +36,8 @@ class ProtectedShopsCronHandler extends CronHandler
     public function handle(ConfigRepository $config, LegalInformationRepositoryContract $legalInfoRepository, AuthHelper $authHelper, ProtectedShopsLegalTextRepository $legalTextRepository):void
     {
         try {
-            $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-            $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+            $shopId = $config->get('ProtectedShops.shopId');
+            $plentyId = $config->get('ProtectedShops.plentyId');
             $legalTextsFromConfig = $legalTextRepository->getPsLegalTexts();
 
             foreach ($legalTextsFromConfig as $legalText) {

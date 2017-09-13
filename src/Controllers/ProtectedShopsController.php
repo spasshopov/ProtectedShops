@@ -93,7 +93,7 @@ class ProtectedShopsController extends Controller
     {
         $data['legalTexts'] = $this->psLegalTextRepository->getPsLegalTexts();
         $data['legalTextsToGerman'] = $this->docMap;
-        return $twig->render('ProtectedShopsForPlenty::content.list', $data);
+        return $twig->render('ProtectedShops::content.list', $data);
     }
 
     /**
@@ -105,8 +105,8 @@ class ProtectedShopsController extends Controller
     public function protectedShopsUpdateLegalTexts(Twig $twig, ConfigRepository $config, Request $request):string
     {
         try {
-            $shopId = $config->get('ProtectedShopsForPlenty.shopId');
-            $plentyId = $config->get('ProtectedShopsForPlenty.plentyId');
+            $shopId = $config->get('ProtectedShops.shopId');
+            $plentyId = $config->get('ProtectedShops.plentyId');
             $legalTextsToSync = array_unique($request->get('psLegalTexts'));
             $legalTextsFromConfig = $this->psLegalTextRepository->getPsLegalTexts();
             $data['legalTextsToGerman'] = $this->docMap;
@@ -141,12 +141,12 @@ class ProtectedShopsController extends Controller
 
             $data['success'] = true;
             $data['legalTexts'] = $this->psLegalTextRepository->getPsLegalTexts();
-            return $twig->render('ProtectedShopsForPlenty::content.list', $data);
+            return $twig->render('ProtectedShops::content.list', $data);
         } catch (\Exception $e) {
             $data['success'] = false;
             echo $e->getMessage();
             $this->getLogger(__FUNCTION__)->error('ProtectedShops::Sync error: ', $e->getMessage());
-            return $twig->render('ProtectedShopsForPlenty::content.list', $data);
+            return $twig->render('ProtectedShops::content.list', $data);
         }
     }
 
