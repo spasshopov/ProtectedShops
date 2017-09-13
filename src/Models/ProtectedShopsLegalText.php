@@ -26,6 +26,6 @@ class ProtectedShopsLegalText extends Model
      */
     public function getTableName(): string
     {
-        return 'ProtectedShops::ProtectedShopsLegalText';
+        return 'ProtectedShopsForPlenty::ProtectedShopsLegalText';
     }
 }
