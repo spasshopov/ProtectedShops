@@ -4,7 +4,7 @@
   "menuEntries": [
     {
       "label": "ProtectedShops",
-      "menu": "start",
+      "menu": "settings",
       "urlKey": "protectedshops-documents",
       "entryPoint": "index.html"
     }
