@@ -7,3 +7,6 @@ Changed plugin category and name
 
 ## v1.0.2 (2017-09-13)
 Geänderter Plugin-Datenbanktabellenname
+
+## v1.0.3 (2017-09-15)
+Change plugin entry point

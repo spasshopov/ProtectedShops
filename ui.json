@@ -3,8 +3,8 @@
   "namespace": "ProtectedShops",
   "menuEntries": [
     {
-      "label": "menu.settings",
-      "menu": "settings/protectedshops",
+      "label": "ProtectedShops",
+      "menu": "settings/cms",
       "urlKey": "protectedshops-documents",
       "entryPoint": "index.html"
     }

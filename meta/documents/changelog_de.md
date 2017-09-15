@@ -7,3 +7,6 @@ Geänderte Plugin-Kategorie und Name
 
 ## v1.0.2 (2017-09-13)
 Geänderter Plugin-Datenbanktabellenname
+
+## v1.0.3 (2017-09-15)
+Geänderter Plugin-Einstiegspunkt
