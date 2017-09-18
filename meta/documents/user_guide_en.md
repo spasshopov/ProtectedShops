@@ -1,14 +1,14 @@
-# This is the headline of your user guide
+# ProtectedShops plugin
  
-The plugin is used for synchronizing your plentymarket 7 legal texts with your ProtectedShops account.
+The plugin is used for synchronizing your "Plentymarket 7" legal texts with your ProtectedShops account.
  
 ## Getting started and requirements
  
-In order to use the plugin one must have ProtectedShops account with Plenty Market module purchased.
+In order to use the plugin one you must have ProtectedShops account with Plenty Market(Onlineshop) module purchased.
 
 ## Plugin configuration
  
-After installing the plugin please fill the configuration. You need to enter your ProtectedShops Shop ID, your plentymarket ID, check the legal texts you want to be updated. In addition you have an option to use protectedshops staging api, note that this is only for users that have been authorized by ProtectedShops to use ProtectedShops staging system.
+After installing the plugin please fill the configuration. You need to enter your ProtectedShops Shop ID and your plentymarket ID, check the legal texts you want to be updated.
  
 ### The first feature of the plugin
  

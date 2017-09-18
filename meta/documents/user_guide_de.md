@@ -1,15 +1,33 @@
-# Dies ist die Überschrift Ihres Benutzerhandbuchs
+# Protected Shops AGB Connect
  
-Das Plugin wird für die Synchronisierung Ihrer Plentymarket 7 Rechtstexte mit Ihrem ProtectedShops Konto verwendet.
- 
-## Erste Schritte und Anforderungen
- 
-Um das Plugin nutzen zu können, muss man ProtectedShops Account mit Plenty Market Modul kaufen.
+Um das plentymarkets Plugin nutzen zu können, müssen Sie ein Protected Shops Schutzpaket für die Plattform "Onlineshop" gebucht haben.
 
-## Plugin-Konfiguration
+## Was bietet ProtectedShops.de?
  
-Nach der Installation des Plugins bitte die Konfiguration ausfüllen. Sie müssen Ihre ProtectedShops Shop ID eingeben, Ihre Plentymarket ID, überprüfen Sie die rechtlichen Texte, die Sie aktualisiert werden möchten. Darüber hinaus haben Sie die Möglichkeit, protectedshops inszenieren api verwenden, beachten Sie, dass dies nur für Benutzer, die von ProtectedShops autorisiert wurden, um ProtectedShops Staging-System zu verwenden.
+Wir erstellen anwaltlich geprüfte AGB, Widerrufsbelehrung & Co. für den Online-Handel ab 7,90 EUR/ Monat zzgl. Ust.
+Die Protected Shops GmbH zählt seit 2009 zu den führenden Anbietern in der fragebogengestützten Rechtstexterstellung und unterstützt Onlinehändler bei der rechtssicheren Gestaltung ihrer Webpräsenzen.
+
+## Wir bieten:
  
-### Das erste Feature des Plugins
+1. Individuelle Rechtstexte
+AGB, Widerrufsbelehrung, Datenschutzerklärung, Impressum, Bezahlarten, Versandkostenerklärung erstellt durch Rechtstextkonfigurator.
+2. Haftungsübernahme
+Haftungsübernahmegarantie für die erstellten Rechtstexte von Protected Shops - Schutz vor Abmahnungen und Kosten.
+3. Update Flatrate
+Zeitnahe Aktualisierung der Rechtstexte bei neuen rechtlichen Anforderungen. Automatisch per Plugin.
+
+### Neu: Komfort Schutzpakete inklusive ARAG Versicherungsleistung Vorteile
  
-Das Plugin aktualisiert die gewünschten Rechtstexte täglich oder auf Anfrage mit einem Klick auf einen Button.
+
+    • 24-Stunden-Anwaltstelefon (keine Selbstbeteiligung)
+
+    • Internet-Rechtsschutz deckt die Risiken der gewerblichen Internetnutzung ab
+
+    • Inklusive Rufretter für die gute Online-Reputation Ihrer Firma
+
+Weit über 9.000 Onlineshops nutzen bereits Protected Shops und sind dadurch stets abmahnfrei, sorgenfrei und sicher.
+Jetzt abmahngeschützte Rechtstexte erstellen unter www.protectedshops.de.
+
+Eine detaillierte Anleitung für die Konfiguration des Plugins finden Sie unter:
+
+    https://www.protectedshops.de/shopsysteme/plentymarkets

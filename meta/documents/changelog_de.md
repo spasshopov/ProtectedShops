@@ -10,3 +10,6 @@ Geänderter Plugin-Datenbanktabellenname
 
 ## v1.0.3 (2017-09-15)
 Geänderter Plugin-Einstiegspunkt
+
+## v1.0.4 (2017-09-18)
+Geänderte Bedienungsanleitung
